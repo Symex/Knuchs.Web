@@ -1,0 +1,14 @@
+﻿@model Knuchs.Web.Models.BlogEntry
+@{
+    ViewBag.Title = "Homepage";
+}
+<div id="blogHeader">
+    <div id="Title">
+        @Model.Title
+    </div>
+    <div>@Model.CreatedOn</div>
+</div>
+
+<div id="BlogContent">
+    @Model.Text
+</div>
