@@ -14,23 +14,9 @@ namespace Knuchs.Web.Controllers
 
         public ActionResult Index()
         {
-            var blogEntry = new BlogEntry()
-            {
-                CreatedOn = DateTime.Now,
-                Id = 1,
-                Text = "Some Usefull Text",
-                Title = "This is the Title"
-            };
-            ViewBag.Message = "Ändern Sie diese Vorlage als Schnelleinstieg in Ihre ASP.NET MVC-Anwendung.";
-            
+            var model = Db.BlogEntries.Where(m => m.Id > 0).ToList();          
 
-            return View("Blog",blogEntry);
-        }
-        public ActionResult Blog()
-        {
-            ViewBag.Message = "Ändern Sie diese Vorlage als Schnelleinstieg in Ihre ASP.NET MVC-Anwendung.";
-
-            return View();
+            return View("Blog", model);
         }
 
         public ActionResult About()
@@ -38,6 +24,12 @@ namespace Knuchs.Web.Controllers
             ViewBag.Message = "Ihre App-Beschreibungsseite.";
 
             return View();
+        }
+
+        public ActionResult ShowComments(int entryId)
+        {
+            var comments = Db.BlogEntries.Where(m => m.Id == entryId);
+            return View("Comments", comments);
         }
     }
 }

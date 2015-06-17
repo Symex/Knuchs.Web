@@ -1,34 +1,46 @@
 ﻿<!DOCTYPE html>
 <html lang="de">
-    <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <meta charset="utf-8" />
-        <title>@ViewBag.Title - Meine ASP.NET MVC-Anwendung</title>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-    </head>
-    <body>
-        <header>
-             @Html.Partial("_HeaderPartial")
-        </header>
-        <div id="body">
-            @RenderSection("featured", required: false)
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>Knuchs.Web</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 
-            <section class="main-content">
-                @RenderBody()
-            </section>
+    <!-- Anything Slider -->
+    <link rel="stylesheet" href="/Content/AnySlide/css/anythingslider.css">
+    <link rel="stylesheet" href="Content/AnySlide/css/theme-metallic.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="~/Content/AnySlide/js/jquery.anythingslider.js"></script>
+    <script src="~/Content/AnySlide/js/jquery.easing.1.2.js"></script>
+    <script src="~/Content/AnySlide/js/swfobject.js"></script>
+    <!-- ///// Anything Slider -->
+
+
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            @Html.Partial("_HeaderPartial")
         </div>
-        <footer>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p>&copy; 2015 - The Knuchs has Risen</p>
-                </div>
-            </div>
-        </footer>
+        <div class="main">
+            @RenderBody()
+        </div>
 
-        @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", required: false)
-    </body>
+
+        <div class="footer">
+            @Html.Partial("_FooterPartial")
+        </div>
+
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
 </html>

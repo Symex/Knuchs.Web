@@ -1,14 +1,46 @@
-﻿@model Knuchs.Web.Models.BlogEntry
+﻿@model List<Knuchs.Web.Models.BlogEntry>
 @{
     ViewBag.Title = "Homepage";
 }
-<div id="blogHeader">
+
+<!-- Required -->
+<script>
+    var jq = jQuery.noConflict();
+    jq(function () {
+        jq('#slider').anythingSlider({
+            theme: 'metallic',
+            expand: true,
+            autoPlay: false,
+
+
+        })
+    });
+</script>
+
+@*<div id="blogHeader">
     <div id="Title">
         @Model.Title
     </div>
     <div>@Model.CreatedOn</div>
 </div>
+*@
 
-<div id="BlogContent">
-    @Model.Text
+
+<div id="slider" class="anythingSlider anythingSlider-metallic">
+    @foreach (var entry in Model)
+    { 
+        <div class="slider-centered">
+            <div class="blogEntryHeader">
+                @entry.Title
+                 @entry.CreatedOn
+               @Html.ActionLink("Show Discussion for this Topic", "ShowComments", new { entryId = entry.Id })
+           
+            </div>
+            <div class="scrollableContent">
+                <p class="">@entry.Text </p>
+            </div>
+
+        </div>
+    }
 </div>
+

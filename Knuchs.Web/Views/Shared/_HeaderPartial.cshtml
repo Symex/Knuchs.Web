@@ -1,18 +1,13 @@
-﻿        <div class="header">
-            <div id="logo">
-                
-            </div>
+﻿
+<div id="nav">
+        <ul id="menu">
+            <li>@Html.ActionLink("Blog", "Index", "Home")</li>
+            <li>@Html.ActionLink("Info", "About", "Home")</li>
+            <li>@Html.ActionLink("Account", "Login", "Account")</li>
+        </ul>
+</div>
 
-            <div id="nav">
-                <nav>
-                    <ul id="menu">
-                        <li>@Html.ActionLink("Blog", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Info", "About", "Home")</li>
-                        <li>@Html.ActionLink("Account", "Login", "Account")</li>
-                    </ul>
-                </nav>
-            </div>
-            <div id="logo">
-                
-            </div>
-        </div>
+<div id="logo">
+<img id="logoImg" src="~/Content/Img/logo.jpg"/>
+</div>
+

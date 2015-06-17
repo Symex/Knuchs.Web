@@ -39,10 +39,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -60,9 +67,6 @@
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -180,62 +184,77 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\themes\base\jquery-ui.css" />
-    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
-    <Content Include="Content\themes\base\jquery.ui.all.css" />
-    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
-    <Content Include="Content\themes\base\jquery.ui.base.css" />
-    <Content Include="Content\themes\base\jquery.ui.button.css" />
-    <Content Include="Content\themes\base\jquery.ui.core.css" />
-    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
-    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
-    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
-    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
-    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
-    <Content Include="Content\themes\base\jquery.ui.slider.css" />
-    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
-    <Content Include="Content\themes\base\jquery.ui.theme.css" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\AnySlide\css\animate.css" />
+    <Content Include="Content\AnySlide\css\anythingslider.css" />
+    <Content Include="Content\AnySlide\css\theme-construction.css" />
+    <Content Include="Content\AnySlide\css\theme-cs-portfolio.css" />
+    <Content Include="Content\AnySlide\css\theme-metallic.css" />
+    <Content Include="Content\AnySlide\css\theme-minimalist-round.css" />
+    <Content Include="Content\AnySlide\css\theme-minimalist-square.css" />
+    <Content Include="Content\AnySlide\demos\colorbox\border.png" />
+    <Content Include="Content\AnySlide\demos\colorbox\colorbox.css" />
+    <Content Include="Content\AnySlide\demos\colorbox\controls.png" />
+    <Content Include="Content\AnySlide\demos\colorbox\ie6\borderBottomCenter.png" />
+    <Content Include="Content\AnySlide\demos\colorbox\ie6\borderBottomLeft.png" />
+    <Content Include="Content\AnySlide\demos\colorbox\ie6\borderBottomRight.png" />
+    <Content Include="Content\AnySlide\demos\colorbox\ie6\borderMiddleLeft.png" />
+    <Content Include="Content\AnySlide\demos\colorbox\ie6\borderMiddleRight.png" />
+    <Content Include="Content\AnySlide\demos\colorbox\ie6\borderTopCenter.png" />
+    <Content Include="Content\AnySlide\demos\colorbox\ie6\borderTopLeft.png" />
+    <Content Include="Content\AnySlide\demos\colorbox\ie6\borderTopRight.png" />
+    <Content Include="Content\AnySlide\demos\colorbox\jquery.colorbox-min.js" />
+    <Content Include="Content\AnySlide\demos\colorbox\jquery.colorbox.js" />
+    <Content Include="Content\AnySlide\demos\colorbox\loading.gif" />
+    <Content Include="Content\AnySlide\demos\colorbox\loading_background.png" />
+    <Content Include="Content\AnySlide\demos\colorbox\overlay.png" />
+    <Content Include="Content\AnySlide\demos\css\page.css" />
+    <Content Include="Content\AnySlide\demos\images\251356.jpg" />
+    <Content Include="Content\AnySlide\demos\images\apple-touch-icon.png" />
+    <Content Include="Content\AnySlide\demos\images\favicon.ico" />
+    <Content Include="Content\AnySlide\demos\images\slide-civil-1.jpg" />
+    <Content Include="Content\AnySlide\demos\images\slide-civil-2.jpg" />
+    <Content Include="Content\AnySlide\demos\images\slide-env-1.jpg" />
+    <Content Include="Content\AnySlide\demos\images\slide-env-2.jpg" />
+    <Content Include="Content\AnySlide\demos\images\slide-tele-1.jpg" />
+    <Content Include="Content\AnySlide\demos\images\slide-tele-2.jpg" />
+    <Content Include="Content\AnySlide\demos\images\th-slide-civil-1.jpg" />
+    <Content Include="Content\AnySlide\demos\images\th-slide-civil-2.jpg" />
+    <Content Include="Content\AnySlide\demos\images\th-slide-env-1.jpg" />
+    <Content Include="Content\AnySlide\demos\images\th-slide-env-2.jpg" />
+    <Content Include="Content\AnySlide\demos\js\css3demo.js" />
+    <Content Include="Content\AnySlide\demos\js\demo.js" />
+    <Content Include="Content\AnySlide\demos\js\jquery.jatt.min.js" />
+    <Content Include="Content\AnySlide\demos\prettify\prettify.css" />
+    <Content Include="Content\AnySlide\demos\prettify\prettify.js" />
+    <Content Include="Content\AnySlide\demos\video\movie.mp4" />
+    <Content Include="Content\AnySlide\images\arrows-metallic.png" />
+    <Content Include="Content\AnySlide\images\arrows-minimalist.png" />
+    <Content Include="Content\AnySlide\images\construction.gif" />
+    <Content Include="Content\AnySlide\images\cs-portfolio.png" />
+    <Content Include="Content\AnySlide\images\default.png" />
+    <Content Include="Content\AnySlide\js\jquery.anythingslider.fx.js" />
+    <Content Include="Content\AnySlide\js\jquery.anythingslider.fx.min.js" />
+    <Content Include="Content\AnySlide\js\jquery.anythingslider.js" />
+    <Content Include="Content\AnySlide\js\jquery.anythingslider.min.js" />
+    <Content Include="Content\AnySlide\js\jquery.anythingslider.video.js" />
+    <Content Include="Content\AnySlide\js\jquery.anythingslider.video.min.js" />
+    <Content Include="Content\AnySlide\js\jquery.easing.1.2.js" />
+    <Content Include="Content\AnySlide\js\jquery.min.js" />
+    <Content Include="Content\AnySlide\js\swfobject.js" />
+    <Content Include="Content\Img\bg-blog.jpg" />
+    <Content Include="Content\Img\bg.png" />
+    <Content Include="Content\Img\bg2.png" />
+    <Content Include="Content\Img\logo.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Content\AnySlide\css\LESS\anythingslider.less" />
+    <Content Include="Content\AnySlide\css\LESS\theme-construction.less" />
+    <Content Include="Content\AnySlide\css\LESS\theme-cs-portfolio.less" />
+    <Content Include="Content\AnySlide\css\LESS\theme-metallic.less" />
+    <Content Include="Content\AnySlide\css\LESS\theme-minimalist-round.less" />
+    <Content Include="Content\AnySlide\css\LESS\theme-minimalist-square.less" />
+    <Content Include="Content\AnySlide\demos\video\movie.ogg" />
+    <Content Include="Content\AnySlide\demos\video\movie.webm" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -260,19 +279,6 @@
     </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Images\accent.png" />
-    <Content Include="Images\bullet.png" />
-    <Content Include="Images\heroAccent.png" />
-    <Content Include="Images\orderedList0.png" />
-    <Content Include="Images\orderedList1.png" />
-    <Content Include="Images\orderedList2.png" />
-    <Content Include="Images\orderedList3.png" />
-    <Content Include="Images\orderedList4.png" />
-    <Content Include="Images\orderedList5.png" />
-    <Content Include="Images\orderedList6.png" />
-    <Content Include="Images\orderedList7.png" />
-    <Content Include="Images\orderedList8.png" />
-    <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -291,6 +297,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_HeaderPartial.cshtml" />
+    <Content Include="Views\Shared\_FooterPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
