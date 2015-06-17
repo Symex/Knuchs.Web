@@ -1,4 +1,4 @@
-﻿@model Knuchs.Web.Models.LocalPasswordModel
+﻿@model List<Knuchs.Web.Models.User>
 @{
     ViewBag.Title = "Konto verwalten";
 }
@@ -7,25 +7,24 @@
     <h1>@ViewBag.Title.</h1>
 </hgroup>
 
-<p class="message-success">@ViewBag.StatusMessage</p>
-
-<p>Angemeldet als <strong>@User.Identity.Name</strong>.</p>
-
-@if (ViewBag.HasLocalPassword)
-{
-    @Html.Partial("_ChangePasswordPartial")
-}
-else
-{ 
-    @Html.Partial("_SetPasswordPartial")
-}
-
-<section id="externalLogins">
-    @Html.Action("RemoveExternalLogins")
-
-    <h3>Externe Anmeldung hinzufügen</h3>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
+<table>
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Newsletter</th>
+        <th>Delete</th>
+    </tr>
+    @foreach (var usr in Model)
+    {
+        <td>@usr.Username</td>
+        <td>@usr.Email</td>
+        <td>@usr.HasNewsletter</td>
+        <td>@usr.IsAdmin</td>
+        <td>@Html.ActionLink( "Make Admin","MakeUserAdmin","Account", new { @UserId = usr.Id}, new {})</td>
+        <td>@Html.ActionLink( "Delete","DeleteUser","Account", new { @UserId = usr.Id}, new {})</td>
+    
+    }
+</table>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

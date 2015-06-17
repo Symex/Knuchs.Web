@@ -5,7 +5,9 @@ using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.UI.WebControls;
 using DotNetOpenAuth.AspNet;
+using Knuchs.Web.Helper;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using Knuchs.Web.Filters;
@@ -13,8 +15,6 @@ using Knuchs.Web.Models;
 
 namespace Knuchs.Web.Controllers
 {
-    [Authorize]
-    [InitializeSimpleMembership]
     public class AccountController : Controller
     {
         //
@@ -23,23 +23,50 @@ namespace Knuchs.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
-        }
 
-    
+            //if (string.IsNullOrEmpty(returnUrl) && Request.UrlReferrer != null)
+            //    returnUrl = Server.UrlEncode(Request.UrlReferrer.PathAndQuery);
+
+            //if (Url.IsLocalUrl(returnUrl) && !string.IsNullOrEmpty(returnUrl))
+            //{
+            //    ViewBag.ReturnURL = returnUrl;
+            //}
+            return View("Login", new LoginModel() { ErroMessage = "", HasError = false, RememberMe = false, ReturnUrl = returnUrl });
+        }
 
         //
         // POST: /Account/LogOff
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public ActionResult LoginCallBack(LoginModel u)
+        {
+            if (IsValidUser(u))
+            {
+                using (var _db = new DataContext())
+                {
+                    HttpContext.GetSession().CurrentUser = _db.Users.First(m => m.Password == u.Password && u.Username == m.Username);
+                    if (u.RememberMe)
+                    {
+                        //SETCookie
+                    }
+                }
+            }
+
+            return RedirectToLocal(u.ReturnUrl);
+
+        }
+
+        [AuthorizeUser]
         public ActionResult LogOff()
         {
-            WebSecurity.Logout();
+            //Destroy Cookie if there is one 
+            HttpContext.GetSession().CurrentUser = null;
 
             return RedirectToAction("Index", "Home");
         }
+
+
 
         //
         // GET: /Account/Register
@@ -47,95 +74,13 @@ namespace Knuchs.Web.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+
+            //Directly Log User in.
             return View();
         }
-
-   
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Disassociate(string provider, string providerUserId)
-        {
-            string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);
-            ManageMessageId? message = null;
-
-            // Die Zuordnung des Kontos nur aufheben, wenn der aktuell angemeldete Benutzer der Besitzer ist
-            if (ownerAccount == User.Identity.Name)
-            {
-                // Eine Transaktion verwenden, um zu verhindern, dass der Benutzer seine letzten Anmeldeinformationen löscht
-                using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
-                {
-                    bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-                    if (hasLocalAccount || OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name).Count > 1)
-                    {
-                        OAuthWebSecurity.DeleteAccount(provider, providerUserId);
-                        scope.Complete();
-                        message = ManageMessageId.RemoveLoginSuccess;
-                    }
-                }
-            }
-
-            return RedirectToAction("Manage", new { Message = message });
-        }
-
-        //
-        // GET: /Account/Manage
-
-        public ActionResult Manage(ManageMessageId? message)
-        {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Ihr Kennwort wurde geändert."
-                : message == ManageMessageId.SetPasswordSuccess ? "Ihr Kennwort wurde festgelegt."
-                : message == ManageMessageId.RemoveLoginSuccess ? "Die externe Anmeldung wurde entfernt."
-                : "";
-            ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-            ViewBag.ReturnUrl = Url.Action("Manage");
-            return View();
-        }
-
-        //
-        // POST: /Account/Manage
-
-      
-
-        //
-        // POST: /Account/ExternalLogin
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExternalLogin(string provider, string returnUrl)
-        {
-            return new ExternalLoginResult(provider, Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
-        }
-
-        //
-        // GET: /Account/ExternalLoginCallback
-
-     
-
-       
-
-        //
-        // GET: /Account/ExternalLoginFailure
-
-        [AllowAnonymous]
-        public ActionResult ExternalLoginFailure()
-        {
-            return View();
-        }
-
-        [AllowAnonymous]
-        [ChildActionOnly]
-        public ActionResult ExternalLoginsList(string returnUrl)
-        {
-            ViewBag.ReturnUrl = returnUrl;
-            return PartialView("_ExternalLoginsListPartial", OAuthWebSecurity.RegisteredClientData);
-        }
-
-    
 
         #region Hilfsprogramme
+
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
@@ -148,67 +93,21 @@ namespace Knuchs.Web.Controllers
             }
         }
 
-        public enum ManageMessageId
+        private bool IsValidUser(LoginModel u)
         {
-            ChangePasswordSuccess,
-            SetPasswordSuccess,
-            RemoveLoginSuccess,
-        }
-
-        internal class ExternalLoginResult : ActionResult
-        {
-            public ExternalLoginResult(string provider, string returnUrl)
+            using (var _db = new DataContext())
             {
-                Provider = provider;
-                ReturnUrl = returnUrl;
-            }
-
-            public string Provider { get; private set; }
-            public string ReturnUrl { get; private set; }
-
-            public override void ExecuteResult(ControllerContext context)
-            {
-                OAuthWebSecurity.RequestAuthentication(Provider, ReturnUrl);
+                var usr = _db.Users.First(m => m.Username == u.Username && m.Password == u.Password);
+                if (usr != null)
+                {
+                    HttpContext.GetSession().CurrentUser = usr;
+                    return true;
+                }
+                HttpContext.GetSession().CurrentUser = null;
+                return false;
             }
         }
 
-        private static string ErrorCodeToString(MembershipCreateStatus createStatus)
-        {
-            // Unter "http://go.microsoft.com/fwlink/?LinkID=177550" finden Sie
-            // vollständige Liste mit Statuscodes.
-            switch (createStatus)
-            {
-                case MembershipCreateStatus.DuplicateUserName:
-                    return "Der Benutzername ist bereits vorhanden. Geben Sie einen anderen Benutzernamen an.";
-
-                case MembershipCreateStatus.DuplicateEmail:
-                    return "Für diese E-Mail-Adresse ist bereits ein Benutzername vorhanden. Geben Sie eine andere E-Mail-Adresse ein.";
-
-                case MembershipCreateStatus.InvalidPassword:
-                    return "Das angegebene Kennwort ist ungültig. Geben Sie einen gültigen Kennwortwert ein.";
-
-                case MembershipCreateStatus.InvalidEmail:
-                    return "Die angegebene E-Mail-Adresse ist ungültig. Überprüfen Sie den Wert, und wiederholen Sie den Vorgang.";
-
-                case MembershipCreateStatus.InvalidAnswer:
-                    return "Die angegebene Kennwortabrufantwort ist ungültig. Überprüfen Sie den Wert, und wiederholen Sie den Vorgang.";
-
-                case MembershipCreateStatus.InvalidQuestion:
-                    return "Die angegebene Kennwortabruffrage ist ungültig. Überprüfen Sie den Wert, und wiederholen Sie den Vorgang.";
-
-                case MembershipCreateStatus.InvalidUserName:
-                    return "Der angegebene Benutzername ist ungültig. Überprüfen Sie den Wert, und wiederholen Sie den Vorgang.";
-
-                case MembershipCreateStatus.ProviderError:
-                    return "Vom Authentifizierungsanbieter wurde ein Fehler zurückgegeben. Überprüfen Sie die Eingabe, und wiederholen Sie den Vorgang. Sollte das Problem weiterhin bestehen, wenden Sie sich an den zuständigen Systemadministrator.";
-
-                case MembershipCreateStatus.UserRejected:
-                    return "Die Benutzererstellungsanforderung wurde abgebrochen. Überprüfen Sie die Eingabe, und wiederholen Sie den Vorgang. Sollte das Problem weiterhin bestehen, wenden Sie sich an den zuständigen Systemadministrator.";
-
-                default:
-                    return "Unbekannter Fehler. Überprüfen Sie die Eingabe, und wiederholen Sie den Vorgang. Sollte das Problem weiterhin bestehen, wenden Sie sich an den zuständigen Systemadministrator.";
-            }
-        }
         #endregion
     }
 }

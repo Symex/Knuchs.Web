@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Knuchs.Web.Helper;
 using Knuchs.Web.Models;
 using Microsoft.Ajax.Utilities;
 
@@ -14,6 +15,7 @@ namespace Knuchs.Web.Controllers
 
         public ActionResult Index()
         {
+
             var model = Db.BlogEntries.Where(m => m.Id > 0).ToList();          
 
             return View("Blog", model);
@@ -31,5 +33,6 @@ namespace Knuchs.Web.Controllers
             var comments = Db.BlogEntries.Where(m => m.Id == entryId);
             return View("Comments", comments);
         }
+
     }
 }

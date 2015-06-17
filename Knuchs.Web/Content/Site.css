@@ -7,6 +7,16 @@ body {
     background: url("/Content/Img/bg2.png");
 }
 
+.contentWrapper {
+    width: 80%;
+    height: 100%;
+    margin: auto;
+}
+
+.anythingSlider-metallic.activeSlider .anythingWindow {
+    border: none;
+}
+
 .wrapper {
     margin-top: 20px;
     margin-left: 50px;
@@ -33,6 +43,7 @@ body {
     border-radius: 22px 22px 22px 22px;
     -moz-border-radius: 22px 22px 22px 22px;
     -webkit-border-radius: 22px 22px 22px 22px;
+    background-color: black;
 }
 
 .footer {
@@ -66,10 +77,10 @@ body {
     #nav a:hover {
         color: orange;
     }
-
-    #nav a:visited {
+/*Needed*/
+#nav a:visited {
         
-    }
+}
 
 #nav ul li {
     display: inline;
@@ -109,7 +120,7 @@ width: 30%;
 
 #slider {
  padding: 20px !important;
- background-color: black  !important;
+ /*background-color: black  !important;*/
 }
 .blogEntryHeader {
     position: relative;
@@ -120,9 +131,9 @@ width: 30%;
     color: white;
 }
 
-.slider-centered panel activePage {
+/*.slider-centered panel activePage {
 background-color: black;
-}
+}*/
 
 .scrollableContent {
  overflow:auto;

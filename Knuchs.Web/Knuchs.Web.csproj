@@ -167,7 +167,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="ExtensionMethods\Extension.cs" />
+    <Compile Include="Filters\AuthorizeAdminAttribute.cs" />
+    <Compile Include="Filters\AuthorizeUserAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -175,11 +177,17 @@
     <Compile Include="Migrations\201506162138365_Initial.Designer.cs">
       <DependentUpon>201506162138365_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506172105536_asd.cs" />
+    <Compile Include="Migrations\201506172105536_asd.Designer.cs">
+      <DependentUpon>201506172105536_asd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\BlogEntry.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\KnuchsSession.cs" />
     <Compile Include="Models\Links.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -280,15 +288,9 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Blog.cshtml" />
@@ -298,6 +300,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_HeaderPartial.cshtml" />
     <Content Include="Views\Shared\_FooterPartial.cshtml" />
+    <Content Include="Views\Account\LoginAdminLandingPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -308,6 +311,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201506162138365_Initial.resx">
       <DependentUpon>201506162138365_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506172105536_asd.resx">
+      <DependentUpon>201506172105536_asd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
