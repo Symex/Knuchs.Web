@@ -120,6 +120,10 @@ width: 30%;
     color: white;
 }
 
+.slider-centered panel activePage {
+background-color: black;
+}
+
 .scrollableContent {
  overflow:auto;
  text-wrap: normal;
