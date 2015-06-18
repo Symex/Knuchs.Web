@@ -17,6 +17,8 @@ namespace Knuchs.Web.Controllers
 {
     public class AccountController : Controller
     {
+
+        #region AnonymousActions
         //
         // GET: /Account/Login
 
@@ -57,17 +59,6 @@ namespace Knuchs.Web.Controllers
 
         }
 
-        [AuthorizeUser]
-        public ActionResult LogOff()
-        {
-            //Destroy Cookie if there is one 
-            HttpContext.GetSession().CurrentUser = null;
-
-            return RedirectToAction("Index", "Home");
-        }
-
-
-
         //
         // GET: /Account/Register
 
@@ -79,6 +70,41 @@ namespace Knuchs.Web.Controllers
             return View();
         }
 
+#endregion
+
+        #region AdminActions
+
+        [AuthorizeAdmin]
+        public ActionResult ManageUsers()
+        {
+            var lsUser = new List<User>();
+            using (var _db = new DataContext())
+            {
+                lsUser = _db.Users.ToList<User>();
+            }
+            return View("Manage",lsUser);
+        }
+
+        [AuthorizeAdmin]
+        public ActionResult WriteEntry()
+        {
+            return View("EntryEditor");
+        }
+        #endregion
+
+        #region UserActions
+
+
+        [AuthorizeUser]
+        public ActionResult LogOff()
+        {
+            //Destroy Cookie if there is one 
+            HttpContext.GetSession().CurrentUser = null;
+
+            return RedirectToAction("Index", "Home");
+        }
+        #endregion
+ 
         #region Hilfsprogramme
 
         private ActionResult RedirectToLocal(string returnUrl)

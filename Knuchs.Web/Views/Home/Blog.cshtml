@@ -2,7 +2,8 @@
 @{
     ViewBag.Title = "Homepage";
 }
-
+<script src="@Url.Content("~/Content/AnySlide/js/jquery.anythingslider.fx.js")"></script>
+ <link rel="stylesheet" href="@Url.Content("~/Content/AnySlide/css/animate.css")" />
 <!-- Required -->
 <script>
     var jq = jQuery.noConflict();
@@ -11,9 +12,18 @@
             theme: 'metallic',
             expand: true,
             autoPlay: false,
+            buildNavigation: false,
+            autoPlay: false,
+            buildStartStop: false,
 
 
-        })
+        }).anythingSliderFx({
+            // FX definitions
+            // 'class or ID'  : [ 'predefined-FX', 'distance', 'time', 'easing' ]
+        },{
+            // FX options
+            dataAnimate: 'data-animate'   // data attribute containing the animate.css class names to add for in and out fx
+    });
     });
 </script>
 
@@ -29,11 +39,13 @@
 <div id="slider" class="anythingSlider anythingSlider-metallic">
     @foreach (var entry in Model)
     { 
-        <div class="slider-centered">
+        <div class="slider-centered" data-animate="bounceInDown, bounceOutDown">
             <div class="blogEntryHeader">
-                @entry.Title
-                 @entry.CreatedOn
-               @Html.ActionLink("Show Discussion for this Topic", "ShowComments", new { entryId = entry.Id })
+                @entry.Title &nbsp;&nbsp;&nbsp;
+           @entry.CreatedOn
+                <hr class="headerSpacer"/>
+           
+               @Html.ActionLink("Show Discussion for this Topic", "ShowComments", new { entryId = entry.Id }, new { @class= "ShowDiscussion"})
            
             </div>
             <div class="scrollableContent">

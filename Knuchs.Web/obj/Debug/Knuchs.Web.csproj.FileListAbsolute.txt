@@ -107,3 +107,4 @@ C:\Users\Simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\bin\E
 C:\Users\Simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\bin\EntityFramework.SqlServer.xml
 C:\Users\Simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\bin\de\EntityFramework.SqlServer.resources.dll
 C:\Users\Simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.asd.resources
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.asd.resources

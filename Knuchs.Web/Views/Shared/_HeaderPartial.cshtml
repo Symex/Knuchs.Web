@@ -1,13 +1,25 @@
-﻿
+﻿@using Knuchs.Web.Helper;
 <div id="nav">
         <ul id="menu">
             <li>@Html.ActionLink("Blog", "Index", "Home")</li>
             <li>@Html.ActionLink("Info", "About", "Home")</li>
             <li>@Html.ActionLink("Account", "Login", "Account")</li>
+            @if (HttpContext.Current.Session["KnuchsSession"] != null)
+            { 
+                var  sess = (Knuchs.Web.Models.KnuchsSession)HttpContext.Current.Session["KnuchsSession"];
+                if(sess.CurrentUser !=null){
+
+                    if (sess.CurrentUser.IsAdmin)
+                    { 
+                        <li>@Html.ActionLink("Manage","ManageUsers","Account")</li>
+                <li>@Html.ActionLink("Write", "WriteEntry","Account")</li>
+                    }
+                }
+            }
         </ul>
 </div>
 
-<div id="logo">
+@*<div id="logo">
 <img id="logoImg" src="~/Content/Img/logo.jpg"/>
 </div>
-
+*@
