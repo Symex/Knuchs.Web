@@ -88,8 +88,75 @@ namespace Knuchs.Web.Controllers
         [AuthorizeAdmin]
         public ActionResult WriteEntry()
         {
-            return View("EntryEditor");
+            
+
+            return View("EntryEditor", new BlogEntry());
         }
+
+        [AuthorizeAdmin]
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult EntryCallback(BlogEntry be)
+        {
+            using (var dc = new DataContext())
+            {
+                be.CreatedOn = DateTime.Now;
+                
+                dc.BlogEntries.Add(be);
+                dc.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [AuthorizeAdmin]
+        public ActionResult MakeUserAdmin(int UserId)
+        {
+            using (var db = new DataContext())
+            {
+                var user = db.Users.First(u => u.Id == UserId);
+                user.IsAdmin = true;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [AuthorizeAdmin]
+        public ActionResult DeleteUser(int UserId)
+        {
+            using (var db = new DataContext())
+            {
+                var user = db.Users.First(u => u.Id == UserId);
+                user = null;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [AuthorizeAdmin]
+        public ActionResult CreateUser()
+        {
+            var u = new User() { IsAdmin = false };
+
+            return View("CreateUser", u);
+        }
+
+        [AuthorizeAdmin]
+        public ActionResult CreateUserCallBack(User u)
+        {
+            using (var db = new DataContext())
+            {
+                u.HasNewsletter = false;
+               
+                db.Users.Add(u);
+            }
+
+            return RedirectToAction("ManageUsers", "Account");
+        }
+
+
         #endregion
 
         #region UserActions

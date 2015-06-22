@@ -2,10 +2,13 @@
 @{
     ViewBag.Title = "Konto verwalten";
 }
-
+<div class="contentWrapper">
 <hgroup class="title">
     <h1>@ViewBag.Title.</h1>
+    <h3>@Html.ActionLink("Create User", "CreateUser", "Account", new { }, new { })</h3>
 </hgroup>
+
+
 
 <table>
     <tr>
@@ -29,3 +32,4 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+    </div>

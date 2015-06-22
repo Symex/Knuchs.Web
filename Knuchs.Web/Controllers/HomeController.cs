@@ -15,10 +15,19 @@ namespace Knuchs.Web.Controllers
 
         public ActionResult Index()
         {
+                List<BlogEntry> model = new List<BlogEntry>();
+            try{
 
-            var model = Db.BlogEntries.Where(m => m.Id > 0).ToList();          
+            using(var db = new DataContext()){
+            model = Db.BlogEntries.Where(m => m.Id > 0).ToList();          
+                 return View("Blog", model);
+            }
+            }
+            catch(Exception ex){
 
-            return View("Blog", model);
+            model.Add(new BlogEntry(){Text = ex.Message});
+
+            return View("Blog", model);}
         }
 
         public ActionResult About()
