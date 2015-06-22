@@ -1,0 +1,35 @@
+﻿@model List<Knuchs.Web.Models.User>
+@{
+    ViewBag.Title = "Konto verwalten";
+}
+<div class="contentWrapper">
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h3>@Html.ActionLink("Create User", "CreateUser", "Account", new { }, new { })</h3>
+</hgroup>
+
+
+
+<table>
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Newsletter</th>
+        <th>Delete</th>
+    </tr>
+    @foreach (var usr in Model)
+    {
+        <td>@usr.Username</td>
+        <td>@usr.Email</td>
+        <td>@usr.HasNewsletter</td>
+        <td>@usr.IsAdmin</td>
+        <td>@Html.ActionLink( "Make Admin","MakeUserAdmin","Account", new { @UserId = usr.Id}, new {})</td>
+        <td>@Html.ActionLink( "Delete","DeleteUser","Account", new { @UserId = usr.Id}, new {})</td>
+    
+    }
+</table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+    </div>
