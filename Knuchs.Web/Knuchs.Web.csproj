@@ -226,6 +226,14 @@
     <Compile Include="Migrations\201506172105536_asd.Designer.cs">
       <DependentUpon>201506172105536_asd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506230920307_CommentDate.cs" />
+    <Compile Include="Migrations\201506230920307_CommentDate.Designer.cs">
+      <DependentUpon>201506230920307_CommentDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506231053016_CommentDate1.cs" />
+    <Compile Include="Migrations\201506231053016_CommentDate1.Designer.cs">
+      <DependentUpon>201506231053016_CommentDate1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\BlogEntry.cs" />
@@ -420,7 +428,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Account\ManageUsers.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -436,6 +444,8 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Account\CreateUser.cshtml" />
+    <Content Include="Views\Account\ManageBlogEntries.cshtml" />
+    <Content Include="Views\Home\Discussion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -449,6 +459,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506172105536_asd.resx">
       <DependentUpon>201506172105536_asd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506230920307_CommentDate.resx">
+      <DependentUpon>201506230920307_CommentDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506231053016_CommentDate1.resx">
+      <DependentUpon>201506231053016_CommentDate1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

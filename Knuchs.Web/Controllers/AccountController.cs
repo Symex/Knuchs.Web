@@ -12,6 +12,8 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using Knuchs.Web.Filters;
 using Knuchs.Web.Models;
+using Newtonsoft.Json;
+using System.Data.Entity;
 
 namespace Knuchs.Web.Controllers
 {
@@ -19,9 +21,7 @@ namespace Knuchs.Web.Controllers
     {
 
         #region AnonymousActions
-        //
-        // GET: /Account/Login
-
+    
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -33,11 +33,8 @@ namespace Knuchs.Web.Controllers
             //{
             //    ViewBag.ReturnURL = returnUrl;
             //}
-            return View("Login", new LoginModel() { ErroMessage = "", HasError = false, RememberMe = false, ReturnUrl = returnUrl });
+            return View("Login", new LoginModel() { ErroMessage = "", HasError = false, RememberMe = true, ReturnUrl = returnUrl });
         }
-
-        //
-        // POST: /Account/LogOff
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -50,7 +47,12 @@ namespace Knuchs.Web.Controllers
                     HttpContext.GetSession().CurrentUser = _db.Users.First(m => m.Password == u.Password && u.Username == m.Username);
                     if (u.RememberMe)
                     {
-                        //SETCookie
+                            var json = JsonConvert.SerializeObject(HttpContext.GetSession().CurrentUser);
+                            var userCookie = new HttpCookie("RememberTheKnuchs", json);
+                            userCookie.Expires.AddDays(30);
+                            HttpContext.Response.SetCookie(userCookie);
+
+                            return RedirectToLocal(u.ReturnUrl);
                     }
                 }
             }
@@ -59,18 +61,14 @@ namespace Knuchs.Web.Controllers
 
         }
 
-        //
-        // GET: /Account/Register
-
         [AllowAnonymous]
         public ActionResult Register()
         {
-
             //Directly Log User in.
             return View();
         }
 
-#endregion
+        #endregion
 
         #region AdminActions
 
@@ -82,15 +80,24 @@ namespace Knuchs.Web.Controllers
             {
                 lsUser = _db.Users.ToList<User>();
             }
-            return View("Manage",lsUser);
+            return View("ManageUsers", lsUser);
         }
 
         [AuthorizeAdmin]
         public ActionResult WriteEntry()
         {
-            
-
             return View("EntryEditor", new BlogEntry());
+        }
+
+        [AuthorizeAdmin]
+        public ActionResult ManageBlogEntries()
+        {
+            var lsEntries = new List<BlogEntry>();
+            using (var dc = new DataContext())
+            {
+                lsEntries = dc.BlogEntries.ToList();
+            }
+            return View("ManageBlogEntries", lsEntries);
         }
 
         [AuthorizeAdmin]
@@ -100,13 +107,38 @@ namespace Knuchs.Web.Controllers
         {
             using (var dc = new DataContext())
             {
-                be.CreatedOn = DateTime.Now;
-                
-                dc.BlogEntries.Add(be);
-                dc.SaveChanges();
+                if (be.Id != 0)
+                {
+                    var e = dc.BlogEntries.First(m => m.Id == be.Id);
+                    e.Text = be.Text;
+                    //e.CreatedOn = DateTime.Now;
+                    e.Title = be.Title;
+                    dc.SaveChanges();
+
+                }
+                else
+                {
+
+                    be.CreatedOn = DateTime.Now;
+                    dc.BlogEntries.Add(be);
+                    dc.SaveChanges();
+                }
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ManageBlogEntries", "Account");
+        }
+
+        [AuthorizeAdmin]
+        public ActionResult EditBlogEntry(int entryId)
+        {
+            var blogEntry = new BlogEntry();
+            using (var dc = new DataContext())
+            {
+                blogEntry = dc.BlogEntries.First(m => m.Id == entryId);
+            }
+
+            return View("EntryEditor", blogEntry);
+
         }
 
         [AuthorizeAdmin]
@@ -119,7 +151,7 @@ namespace Knuchs.Web.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ManageUsers", "Account");
         }
 
         [AuthorizeAdmin]
@@ -128,11 +160,24 @@ namespace Knuchs.Web.Controllers
             using (var db = new DataContext())
             {
                 var user = db.Users.First(u => u.Id == UserId);
-                user = null;
+                db.Users.Remove(user);
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ManageUsers", "Account");
+        }
+
+        [AuthorizeAdmin]
+        public ActionResult DeleteBlogEntry(int entryId)
+        {
+            using (var db = new DataContext())
+            {
+                var entry = db.BlogEntries.First(e => e.Id == entryId);
+                db.BlogEntries.Remove(entry);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("ManageBlogEntries", "Account");
         }
 
         [AuthorizeAdmin]
@@ -144,13 +189,31 @@ namespace Knuchs.Web.Controllers
         }
 
         [AuthorizeAdmin]
+        public ActionResult DeleteComment(int id)
+        {
+            using (var db = new DataContext())
+            {
+                var cmt = db.Comments.First(m => m.Id == id);
+          //      var eId = cmt.RefBlogEntry.Id;
+                db.Comments.Remove(cmt);
+                db.SaveChanges();
+
+                return RedirectToAction("ShowComments", "Home", new { @entryId = 1 });//eId });
+            }
+            return RedirectToAction("Index", "Home");
+          
+        }
+
+        [AuthorizeAdmin]
         public ActionResult CreateUserCallBack(User u)
         {
             using (var db = new DataContext())
             {
                 u.HasNewsletter = false;
-               
+
                 db.Users.Add(u);
+                db.SaveChanges();
+                ViewBag.Message = "Der User wurde erfolgreich erstellt.";
             }
 
             return RedirectToAction("ManageUsers", "Account");
@@ -161,6 +224,39 @@ namespace Knuchs.Web.Controllers
 
         #region UserActions
 
+        [AuthorizeUser]
+        public ActionResult NewComment(string NewCommentText, int EntryId, string NewCommentTitle)
+        {
+            using(var dc = new DataContext())
+            {
+                var entry = dc.BlogEntries.First(m=>m.Id == EntryId);
+                var foo = HttpContext.GetSession().CurrentUser.Id;
+
+                var user = dc.Users.First(m => m.Id == foo);
+                var cmt = new Comment(){
+              
+                CreatedOn = DateTime.Now,
+                Text = NewCommentText,
+                Title = NewCommentTitle,
+                };
+
+                dc.Comments.Add(cmt);
+                dc.SaveChanges();
+
+                //Set References, just to make sure.
+                dc.Comments.Attach(cmt);
+                cmt.RefUser = user;
+                cmt.RefBlogEntry = entry;
+                dc.Entry(cmt).State = EntityState.Modified;
+                dc.Entry(cmt.RefBlogEntry).State = EntityState.Modified;
+                dc.Entry(cmt.RefUser).State = EntityState.Modified;
+
+
+                dc.SaveChanges();
+            }
+            //Return Discussion for given Entry ID
+            return RedirectToAction("ShowComments", "Home" , new { entryId = EntryId });
+        }
 
         [AuthorizeUser]
         public ActionResult LogOff()
@@ -170,8 +266,9 @@ namespace Knuchs.Web.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
         #endregion
- 
+
         #region Hilfsprogramme
 
         private ActionResult RedirectToLocal(string returnUrl)

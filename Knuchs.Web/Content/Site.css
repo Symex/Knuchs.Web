@@ -27,6 +27,14 @@ body {
     flex-direction: column;
 }
 
+.cutCell {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
 .header {
     background-color: white;
     height: 100px;
@@ -118,6 +126,7 @@ width: 30%;
   display: inline;
   margin-top: 60px;
   margin-left:20px;
+  width: 1000px;
   
 }
 
@@ -187,7 +196,30 @@ border: 0px solid #000000;
 padding: 20px;
 
 }
-
+#comments td,th {
+    max-width: 100px;
+    overflow: hidden;
+    border: 1px  solid black;
+}
+#comments th {
+background-color: black;
+color: white;
+}
+table#comments {
+    max-width: 800px;
+    min-width: 800px;
+    border: solid black 1px;
+    word-break: break-all;
+    text-wrap: normal;
+    min-height: 100px;
+    overflow: auto;
+}
+#NewCommentText {
+  margin: 0px;
+  width: 426px;
+  height: 77px;
+  resize: none;
+}
 .contentWrapper {
 background-color: white;
 margin: auto;

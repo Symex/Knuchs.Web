@@ -13,5 +13,7 @@ namespace Knuchs.Web.Models
         public string Text { get; set; }
         public BlogEntry RefBlogEntry { get; set; }
         public User RefUser { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public string Title { get; set; }
     }
 }

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Knuchs.Web.Models.BlogEntry>
+
+@{
+    ViewBag.Title = "ManageBlogEntries";
+}
+<div class="contentWrapper">
+<h2>ManageBlogEntries</h2>
+
+<p>
+ @Html.ActionLink("Write", "WriteEntry","Account")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedOn)
+        </td>
+        <td class="cutCell">
+            @Html.DisplayFor(modelItem => item.Text)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditBlogEntry", new { entryId=item.Id }) ||
+            @Html.ActionLink("Delete", "DeleteBlogEntry", new { entryId=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+    </div>

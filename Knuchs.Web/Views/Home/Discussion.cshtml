@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Knuchs.Web.Models.Comment>
+
+@{
+    ViewBag.Title = "Discussion";
+}
+<div class="contentWrapper">
+    <h2>@ViewBag.Heading</h2>
+
+    <table id="comments">
+
+        @foreach (var item in Model)
+        {
+            <tr class="cmtHead">
+                <th>
+                    @Html.Raw(item.Title)
+                </th>
+                <th>@if (item.RefUser != null)
+                    {
+                    @Html.Raw(item.RefUser.Username)
+                    }
+                </th>
+                <th>@item.CreatedOn.ToString("g")</th>
+                <th>
+                    @if (HttpContext.Current.Session["KnuchsSession"] != null)
+                    {
+                        var sess = (Knuchs.Web.Models.KnuchsSession)HttpContext.Current.Session["KnuchsSession"];
+                        if (sess != null)
+                        {
+                            if (sess.CurrentUser != null)
+                            {
+                                if (sess.CurrentUser.IsAdmin)
+                                {
+                                     @Html.ActionLink("Delete", "DeleteComment", "Account", new { id = item.Id }, new { })
+                                }
+                            }
+                        }
+                    }
+                </th>
+                  </tr>
+                <tr class="cmtHead">
+                    <td colspan="4">@Html.Raw(item.Text)</td>
+                </tr>
+          
+        }
+         </table>
+   <hr />
+        <div id="commentForm">
+            
+            <h3>Neuer Kommentar verfassen</h3>
+        @using (Html.BeginForm("NewComment", "Account", new { @EntryId = ViewBag.EntryId }, FormMethod.Post, new { }))
+        {<table>
+            <tr>
+                <td>Titel</td><td> <input name="NewCommentTitle" id="NewCommentTitle" type="text" /></td>
+            </tr>
+            <tr>
+                <td>Text</td>
+                <td>  <textarea name="NewCommentText" id="NewCommentText" cols="5" rows="2"></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2"> <input type="submit" id="Submit" name="Submit" value="Kommentieren" style="margin-left:35px;"/></td>
+            </tr>
+         </table>
+           
+          
+            @*<input name="NewCommentText" type="text" value="" id="NewCommentText" aria-multiline="true">*@
+
+           
+        }
+            </div>
+
+   
+</div>

@@ -11,23 +11,30 @@ namespace Knuchs.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public static DataContext Db = new DataContext();
-
         public ActionResult Index()
         {
-                List<BlogEntry> model = new List<BlogEntry>();
-            try{
+            //Check Cookie and Set complete Session if there is one.
 
-            using(var db = new DataContext()){
-            model = Db.BlogEntries.Where(m => m.Id > 0).ToList();          
-                 return View("Blog", model);
+
+
+
+            List<BlogEntry> model = new List<BlogEntry>();
+            try
+            {
+                using (var dc = new DataContext())
+                {
+                    model = dc.BlogEntries.Where(m => m.Id > 0).ToList();
+                    model.OrderByDescending(m => m.CreatedOn);
+                    return View("Blog", model);
+                }
             }
+            catch (Exception ex)
+            {
+
+                model.Add(new BlogEntry() { Text = ex.Message });
+
+                return View("Blog", model);
             }
-            catch(Exception ex){
-
-            model.Add(new BlogEntry(){Text = ex.Message});
-
-            return View("Blog", model);}
         }
 
         public ActionResult About()
@@ -39,8 +46,15 @@ namespace Knuchs.Web.Controllers
 
         public ActionResult ShowComments(int entryId)
         {
-            var comments = Db.BlogEntries.Where(m => m.Id == entryId);
-            return View("Comments", comments);
+            using (var dc = new DataContext())
+            {
+                ViewBag.EntryId = entryId;
+                var entry = dc.BlogEntries.First(m => m.Id == entryId);
+                ViewBag.Heading = "Discussion for Topic: " + entry.Title;
+                var comments = dc.Comments.Where(m => m.RefBlogEntry.Id == entryId).OrderByDescending(m=> m.CreatedOn).ToList<Comment>();
+
+                return View("Discussion", comments);
+            }
         }
 
     }

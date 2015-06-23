@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Knuchs.Web.Helper;
 using WebMatrix.WebData;
 using Knuchs.Web.Models;
+using Newtonsoft.Json;
 
 namespace Knuchs.Web.Filters
 {
@@ -18,8 +19,15 @@ namespace Knuchs.Web.Filters
 
             if (ctx.GetSession() != null)
             {
+                //Check for Remember Me cookie
+                if (ctx.Request.Cookies["RememberTheKnuchs"] != null)
+                {
+                    var user = JsonConvert.DeserializeObject<User>(ctx.Request.Cookies["RememberTheKnuchs"].Value);
+                    ctx.GetSession().CurrentUser = user;
+                }
                 return ctx.GetSession().CurrentUser != null;
             }
+
             return false;
         }
     }

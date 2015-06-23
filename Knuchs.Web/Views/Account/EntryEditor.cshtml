@@ -43,18 +43,19 @@
         </div>
         <div class="editor-field">
 
-          <textarea name="Text" id="Text" style="width:100%"></textarea>
+          <textarea name="Text" id="Text" style="width:100%">@Html.Raw(Model.Text)</textarea>
             @*@Html.EditorFor(model => model.Text)*@
             @Html.ValidationMessageFor(model => model.Text)
         </div>
 
+         @Html.HiddenFor(m => m.Id)
         <p>
             <input type="submit" value="Create" />
         </p>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back", "ManageBlogEntries", "Account")
 </div>
 
 @section Scripts {
