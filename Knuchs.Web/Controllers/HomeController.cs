@@ -52,8 +52,14 @@ namespace Knuchs.Web.Controllers
                 var entry = dc.BlogEntries.First(m => m.Id == entryId);
                 ViewBag.Heading = "Discussion for Topic: " + entry.Title;
                 var comments = dc.Comments.Where(m => m.RefBlogEntry.Id == entryId).OrderByDescending(m=> m.CreatedOn).ToList<Comment>();
+                var vmCmts = new List<CommentViewModel>();
+                foreach (var cmt in comments)
+                {
+                    vmCmts.Add(ViewModelParser.GetViewModelFromComment(cmt));
+                }
 
-                return View("Discussion", comments);
+
+                return View("Discussion", vmCmts);
             }
         }
 

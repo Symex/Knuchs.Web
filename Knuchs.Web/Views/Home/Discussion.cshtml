@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Knuchs.Web.Models.Comment>
+﻿@model IEnumerable<Knuchs.Web.Models.CommentViewModel>
 
 @{
     ViewBag.Title = "Discussion";
@@ -14,10 +14,9 @@
                 <th>
                     @Html.Raw(item.Title)
                 </th>
-                <th>@if (item.RefUser != null)
-                    {
-                    @Html.Raw(item.RefUser.Username)
-                    }
+                <th>
+                    @Html.Raw(item.Username)
+                    
                 </th>
                 <th>@item.CreatedOn.ToString("g")</th>
                 <th>

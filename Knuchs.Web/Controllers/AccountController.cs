@@ -194,14 +194,12 @@ namespace Knuchs.Web.Controllers
             using (var db = new DataContext())
             {
                 var cmt = db.Comments.First(m => m.Id == id);
-          //      var eId = cmt.RefBlogEntry.Id;
+                var eId = cmt.RefBlogEntry.Id;
                 db.Comments.Remove(cmt);
                 db.SaveChanges();
 
-                return RedirectToAction("ShowComments", "Home", new { @entryId = 1 });//eId });
-            }
-            return RedirectToAction("Index", "Home");
-          
+                return RedirectToAction("ShowComments", "Home", new { @entryId = eId });//eId });
+            }          
         }
 
         [AuthorizeAdmin]

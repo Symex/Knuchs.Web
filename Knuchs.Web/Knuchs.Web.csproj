@@ -218,6 +218,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\ViewModelParser.cs" />
     <Compile Include="Migrations\201506162138365_Initial.cs" />
     <Compile Include="Migrations\201506162138365_Initial.Designer.cs">
       <DependentUpon>201506162138365_Initial.cs</DependentUpon>
@@ -235,6 +236,7 @@
       <DependentUpon>201506231053016_CommentDate1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\BlogEntry.cs" />
     <Compile Include="Models\Comment.cs" />
