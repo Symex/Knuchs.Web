@@ -228,9 +228,9 @@ namespace Knuchs.Web.Controllers
             using(var dc = new DataContext())
             {
                 var entry = dc.BlogEntries.First(m=>m.Id == EntryId);
-                var foo = HttpContext.GetSession().CurrentUser.Id;
+                var aidee = HttpContext.GetSession().CurrentUser.Id;
 
-                var user = dc.Users.First(m => m.Id == foo);
+                var user = dc.Users.First(m => m.Id == aidee);
                 var cmt = new Comment(){
               
                 CreatedOn = DateTime.Now,
@@ -261,6 +261,12 @@ namespace Knuchs.Web.Controllers
         {
             //Destroy Cookie if there is one 
             HttpContext.GetSession().CurrentUser = null;
+            if (Request.Cookies["RememberTheKnuchs"] != null)
+            {
+                var c = new HttpCookie("RememberTheKnuchs");
+                c.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(c);
+            }
 
             return RedirectToAction("Index", "Home");
         }
