@@ -14,10 +14,6 @@ namespace Knuchs.Web.Controllers
         public ActionResult Index()
         {
             //Check Cookie and Set complete Session if there is one.
-
-
-
-
             List<BlogEntry> model = new List<BlogEntry>();
             try
             {

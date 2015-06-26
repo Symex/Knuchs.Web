@@ -3,43 +3,32 @@
 @{
     ViewBag.Title = "ManageBlogEntries";
 }
-<div class="contentWrapper">
-<h2>ManageBlogEntries</h2>
 
-<p>
- @Html.ActionLink("Write", "WriteEntry","Account")
-</p>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Text)
-        </th>
-        <th></th>
-    </tr>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Blogverwaltung</div>
+  <div class="panel-body">
+    <p>Du kannst hier alle Einträge verwalten, neue  @Html.ActionLink("erstellen", "WriteEntry","Account") sowie bestehende löschen.</p>
+      
+  </div>
 
-@foreach (var item in Model) {
+  <table class="table">
+   @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedOn)
-        </td>
-        <td class="cutCell">
-            @Html.DisplayFor(modelItem => item.Text)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "EditBlogEntry", new { entryId=item.Id }) ||
+        <td class="fixed-width-200">
+          <b>  @Html.DisplayFor(modelItem => item.Title) </b><br />
+             @Html.DisplayFor(modelItem => item.CreatedOn)<br /><br />
+                   
+            @Html.ActionLink("Edit", "EditBlogEntry", new { entryId=item.Id }) <br />
             @Html.ActionLink("Delete", "DeleteBlogEntry", new { entryId=item.Id })
+
+        </td>
+           
+        <td class="cutCell">
+            @Html.Raw(item.Text)
         </td>
     </tr>
 }
 
-</table>
-    </div>
+  </table>
+</div>

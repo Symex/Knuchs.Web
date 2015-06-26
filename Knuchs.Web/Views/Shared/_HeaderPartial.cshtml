@@ -1,34 +1,60 @@
 ﻿@using Knuchs.Web.Helper;
-<div id="nav">
-        <ul id="menu">
-            <div style="float: left; margin-left:10px;">
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <span class="sr-only">Toggle</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+     @Html.ActionLink("Knuchs", "Index", "Home", new { },new { @class="navbar-brand" })
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+      <ul class="nav navbar-nav">
+          @if(ViewBag.Title == "Blog")
+          {
+            <li class="active">@Html.ActionLink("Blog", "Index", "Home")</li>
+          }
+          else
+          {
             <li>@Html.ActionLink("Blog", "Index", "Home")</li>
-            <li>@Html.ActionLink("Info", "About", "Home")</li>
-            </div>
-        <div style="float: left; margin-left:20px;">
-   
+          }
+          @if(ViewBag.Title == "Info")
+          {
+             <li class="active">@Html.ActionLink("Info", "About", "Home")</li>
+          }else
+          {
+              <li>@Html.ActionLink("Info", "About", "Home")</li>
+          }
+      
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-keyboard="false" data-backdrop="static">Admin<span class="caret"></span></a>
+
+             <ul class="dropdown-menu">
+           <li>@Html.ActionLink("Beitragsverwaltung","ManageBlogEntries","Account")</li>
+           <li>@Html.ActionLink("Benutzerverwaltung","ManageUsers","Account")</li>
+      
+          </ul>
+        </li>
+         
+      </ul>
+
+      
+      <ul class="nav navbar-nav navbar-right">
+          
             @if (HttpContext.Current.Session["KnuchsSession"] != null)
             { 
                 var  sess = (Knuchs.Web.Models.KnuchsSession)HttpContext.Current.Session["KnuchsSession"];
                 if(sess.CurrentUser !=null){
-
-                    if (sess.CurrentUser.IsAdmin)
-                    { 
-                        <li>@Html.ActionLink("Users","ManageUsers","Account")</li>
-                        <li>@Html.ActionLink("Entries","ManageBlogEntries","Account")</li>
-                    }
-                    
                     <li>@Html.ActionLink("Logout", "LogOff", "Account")</li>
                 }
                 else{
                      <li>@Html.ActionLink("Login", "Login", "Account")</li>
             }
             }
-            </div>
-        </ul>
-</div>
-
-@*<div id="logo">
-<img id="logoImg" src="~/Content/Img/logo.jpg"/>
-</div>
-*@
+      </ul>
+    </div>
+  </div>
+</nav>

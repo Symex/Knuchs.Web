@@ -3,60 +3,55 @@
 @{
     ViewBag.Title = "Create A New User";
 }
-<div class="contentWrapper">
-<h2>Neuen Benutzer erfassen</h2>
 
-@using (Html.BeginForm("CreateUserCallBack", "Account", FormMethod.Post)) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Username)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Username)
-            @Html.ValidationMessageFor(model => model.Username)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Password)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Password)
-            @Html.ValidationMessageFor(model => model.Password)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Email)
-            @Html.ValidationMessageFor(model => model.Email)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasNewsletter)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.HasNewsletter)
-            @Html.ValidationMessageFor(model => model.HasNewsletter)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsAdmin)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IsAdmin)
-            @Html.ValidationMessageFor(model => model.IsAdmin)
-        </div>
+<div class="loginWrapper">
+    <div class="panel panel-default">
+        <div class="panel-heading">Neuen Benutzer erfassen</div>
+        <div class="panel-body">
 
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-}
+            @using (Html.BeginForm("CreateUserCallBack", "Account", FormMethod.Post))
+            {
+                @Html.ValidationSummary(true)
+   
+                @Html.LabelFor(model => model.Username)
+                @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
+                <br />
+                @Html.LabelFor(model => model.Password)
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Password)
+    
+                <br />
+                @Html.LabelFor(model => model.Email)
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email)
+                
+                <br />
+                <div class="float-left fixed-width-100">@Html.LabelFor(model => model.HasNewsletter)</div>
+                <div>
+                    @Html.EditorFor(model => model.HasNewsletter)
+                    @Html.ValidationMessageFor(model => model.HasNewsletter)
+                </div>
+    
+                <br />
+                <div class="float-left fixed-width-100">@Html.LabelFor(model => model.IsAdmin)</div>
+                <div>
+                    @Html.EditorFor(model => model.IsAdmin)
+                    @Html.ValidationMessageFor(model => model.IsAdmin)
+                </div>
+                <br />
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+                <input type="submit" value="Create" class="btn btn-default" />
+
+            }
+        </div>
+    </div>
+
 </div>
+
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-    </div>

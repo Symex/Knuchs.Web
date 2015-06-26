@@ -14,6 +14,7 @@ using Knuchs.Web.Filters;
 using Knuchs.Web.Models;
 using Newtonsoft.Json;
 using System.Data.Entity;
+using System.Net.Mail;
 
 namespace Knuchs.Web.Controllers
 {
@@ -64,8 +65,32 @@ namespace Knuchs.Web.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            //Directly Log User in.
             return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult RegisterUser(User u, string pwcheck)
+        {
+            if (IsValidRegistration(u,pwcheck))
+            {
+                if (HttpContext.GetSession() != null)
+                {
+                    using (var db = new DataContext())
+                    {
+                        db.Users.Add(u);
+                        db.SaveChanges();
+                    }
+                    HttpContext.GetSession().CurrentUser = u;
+                }   
+            }
+            else 
+            {
+                u.Password = "";
+                return View("Register", u);
+            }
+
+
+            return RedirectToAction("Index", "Home");
         }
 
         #endregion
@@ -161,6 +186,13 @@ namespace Knuchs.Web.Controllers
             {
                 var user = db.Users.First(u => u.Id == UserId);
                 db.Users.Remove(user);
+
+                var cmts = db.Comments.Where(m => m.RefUser.Id == user.Id).ToList();
+                foreach (var c in cmts)
+                {
+                    db.Comments.Remove(c);
+                }
+
                 db.SaveChanges();
             }
 
@@ -273,7 +305,7 @@ namespace Knuchs.Web.Controllers
 
         #endregion
 
-        #region Hilfsprogramme
+        #region HelperMethods
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
@@ -300,6 +332,70 @@ namespace Knuchs.Web.Controllers
                 HttpContext.GetSession().CurrentUser = null;
                 return false;
             }
+        }
+
+        public bool IsValidRegistration(User u, string pwcheck)
+        {
+            bool valid = true;
+
+            if (u.Username.Length > 20)
+            {
+                ModelState.AddModelError("Username", "Der Benutzername darf nicht länger als 20 Zeichen sein.");
+            }
+            if (u.Username.Length < 3)
+            {
+                ModelState.AddModelError("Username", "Der Benutzername darf nicht kürzer als 3 Zeichen sein.");
+            }
+            if (u.Password != pwcheck)
+            {
+                valid = false; 
+                ModelState.AddModelError("Password", "Passwörter stimmen nicht überein.");
+            }else if( u.Password.Length < 6)
+            {
+                ModelState.AddModelError("Password", "Wähle ein Passwort mit mindestens 6 Stellen.");
+            }
+
+            try {
+                var m = new MailAddress(u.Email);
+                using(var db = new DataContext()){
+                  
+                   var usrMail = db.Users.FirstOrDefault(usr => usr.Email == u.Email);
+                   if(usrMail != null)
+                    {
+                        valid = false;
+                        ModelState.AddModelError("Email", "Diese Mail-Adresse wurde bereits vergeben.");
+                    }
+                }
+            }
+            catch 
+            {
+                valid = false;
+                ModelState.AddModelError("Email", "Keine gültige Email Adresse");
+            }
+
+
+            if (u.Username.Length < 1)
+            {
+                valid = false;
+                ModelState.AddModelError("Username", "Gib einen Benutzernamen an!");
+            }
+            else {
+                using (var db = new DataContext())
+                {
+                    var usrNme = db.Users.FirstOrDefault(m => m.Username == u.Username);
+                  
+
+                    if (usrNme != null)
+                    {
+                        valid = false;
+                        ModelState.AddModelError("Username", "Der Benutzername ist bereits vergeben.");
+                    }
+                 
+
+                }
+            }
+
+            return valid;
         }
 
         #endregion

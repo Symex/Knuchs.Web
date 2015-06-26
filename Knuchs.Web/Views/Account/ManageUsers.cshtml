@@ -1,40 +1,45 @@
 ﻿@model List<Knuchs.Web.Models.User>
 @{
-    ViewBag.Title = "Konto verwalten";
+    ViewBag.Title = "Benutzerverwaltung";
 }
-<div class="contentWrapper">
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h3>@Html.ActionLink("Create User", "CreateUser", "Account", new { }, new { })</h3>
-</hgroup>
+<div class="loginWrapper">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @ViewBag.Title
+        </div>
+        <div class="panel-body">
+            <p>Du kannst hier alle Benutzer verwalten, neue  @Html.ActionLink("erstellen", "CreateUser", "Account") sowie bestehende löschen.</p>
+        </div>
 
-    @if(!string.IsNullOrEmpty(ViewBag.Message)){
-    <h3 class="messageBox">@ViewBag.Message</h3>
-    }
+        <table class="table">
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>News</th>
+                <th>Admin</th>
+                <th></th>
+                <th>Delete</th>
+            </tr>
+            @foreach (var usr in Model)
+            {
+                <tr>
+                    <td>@usr.Username</td>
+                    <td>@usr.Email</td>
+                    <td >@usr.HasNewsletter</td>
+                    <td>@usr.IsAdmin</td>
+                    <td>
+                        @if (!usr.IsAdmin)
+                        {@Html.ActionLink("Upgrade", "MakeUserAdmin", "Account", new { @UserId = usr.Id }, new { })}
+                        &nbsp;
 
-<table>
-    <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Newsletter</th>
-        <th>Admin</th>
-        <th></th>
-        <th></th>
-    </tr>
-    @foreach (var usr in Model)
-    {<tr>
-        <td>@usr.Username</td>
-        <td>@usr.Email</td>
-        <td>@usr.HasNewsletter</td>
-        <td>@usr.IsAdmin</td>
-        <td>@Html.ActionLink( "Make Admin","MakeUserAdmin","Account", new { @UserId = usr.Id}, new {})</td>
-        <td>@Html.ActionLink( "Delete","DeleteUser","Account", new { @UserId = usr.Id}, new {})</td>
-        </tr>
-    
-    }
-</table>
+                    </td>
+                    <td class="centered-content">@Html.ActionLink("X", "DeleteUser", "Account", new { @UserId = usr.Id }, new { })</td>
+                </tr>   
+            }
+        </table>
+    </div>
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-    </div>

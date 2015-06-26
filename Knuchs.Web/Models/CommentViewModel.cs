@@ -13,6 +13,6 @@ namespace Knuchs.Web.Models
         public string Username { get; set; }
         public DateTime CreatedOn { get; set; }
         public string Title { get; set; }
-    
+        public bool IsAdmin { get; set; }
     }
 }

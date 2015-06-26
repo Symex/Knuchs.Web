@@ -1,12 +1,12 @@
 ﻿@model Knuchs.Web.Models.BlogEntry
 <div class="contentWrapper">
-@{
-    ViewBag.Title = "Neuen Blog eintrag erstellen";
-}
-@* Richt Text Editor Scripts *@
-<script src="@Url.Content("~/Content/tinymce/tinymce.min.js")"></script>
+    @{
+        ViewBag.Title = "Neuen Blog eintrag erstellen";
+    }
+    @* Richt Text Editor Scripts *@
+    <script src="@Url.Content("~/Content/tinymce/tinymce.min.js")"></script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
         tinymce.init({
             selector: "textarea",
             plugins: [
@@ -16,49 +16,51 @@
             ],
             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
         });
-</script>
-@* RTE Script End *@
+    </script>
+    @* RTE Script End *@
 
 
 
-<h2>Neuer Eintrag</h2>
+    <div class="panel panel-default">
+        <div class="panel-heading">Neuer Blogeintrag erfassen</div>
+        <div class="panel-body">
 
-@using (Html.BeginForm("EntryCallback", "Account", FormMethod.Post)) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+            @using (Html.BeginForm("EntryCallback", "Account", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
 
    
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Title)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Title)
-            @Html.ValidationMessageFor(model => model.Title)
-        </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Title)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Title)
+                </div>
+                <br />
 
         
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Text)
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Text)
+                </div>
+                <div class="editor-field">
+
+                    <textarea name="Text" id="Text" style="width: 100%">@Html.Raw(Model.Text)</textarea>
+                    @*@Html.EditorFor(model => model.Text)*@
+                    @Html.ValidationMessageFor(model => model.Text)
+                </div>
+                <br />
+                @Html.HiddenFor(m => m.Id)
+                <p>
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </p>
+            }
+
+
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
         </div>
-        <div class="editor-field">
-
-          <textarea name="Text" id="Text" style="width:100%">@Html.Raw(Model.Text)</textarea>
-            @*@Html.EditorFor(model => model.Text)*@
-            @Html.ValidationMessageFor(model => model.Text)
-        </div>
-
-         @Html.HiddenFor(m => m.Id)
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-}
-
-<div>
-    @Html.ActionLink("Back", "ManageBlogEntries", "Account")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-    </div>

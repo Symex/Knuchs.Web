@@ -7,19 +7,35 @@
     <h2>@ViewBag.Heading</h2>
 
     <table id="comments">
+        @if (Model.Count() < 1)
+        { 
+            <tr>
+                <td>
+                    <h4 style="color: orange;">Schreibe jetzt den ersten Kommentar zu diesem Thema</h4>
+                </td>
+            </tr>
+        }
 
         @foreach (var item in Model)
         {
-            <tr class="cmtHead">
-                <th>
-                    @Html.Raw(item.Title)
-                </th>
-                <th>
-                    @Html.Raw(item.Username)
-                    
-                </th>
-                <th>@item.CreatedOn.ToString("g")</th>
-                <th>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="float-left fixed-width-200">@Html.Raw(item.Title) </div>
+                    <div class="float-left">
+                        @if (item.IsAdmin)
+                        { 
+                            @Html.Raw("<b style=\"color:orange;\">" + item.Username + "</b>");
+                        }
+                        else
+                        { 
+                            @Html.Raw("<b>" + item.Username + "</b>");
+                        }
+
+                    </div>
+
+                    <div style="clear: right;">@item.CreatedOn.ToString("g")</div>
+
+                    @* Löschen Button *@
                     @if (HttpContext.Current.Session["KnuchsSession"] != null)
                     {
                         var sess = (Knuchs.Web.Models.KnuchsSession)HttpContext.Current.Session["KnuchsSession"];
@@ -29,43 +45,49 @@
                             {
                                 if (sess.CurrentUser.IsAdmin)
                                 {
-                                     @Html.ActionLink("Delete", "DeleteComment", "Account", new { id = item.Id }, new { })
+                        <div class="float-right margin-top-negative20">@Html.ActionLink("X", "DeleteComment", "Account", new { id = item.Id }, new { @Class = "DeleteLink" })</div>
+                                  
                                 }
                             }
                         }
                     }
-                </th>
-                  </tr>
-                <tr class="cmtHead">
-                    <td colspan="4">@Html.Raw(item.Text)</td>
-                </tr>
-          
-        }
-         </table>
-   <hr />
-        <div id="commentForm">
-            
-            <h3>Neuer Kommentar verfassen</h3>
-        @using (Html.BeginForm("NewComment", "Account", new { @EntryId = ViewBag.EntryId }, FormMethod.Post, new { }))
-        {<table>
-            <tr>
-                <td>Titel</td><td> <input name="NewCommentTitle" id="NewCommentTitle" type="text" /></td>
-            </tr>
-            <tr>
-                <td>Text</td>
-                <td>  <textarea name="NewCommentText" id="NewCommentText" cols="5" rows="2"></textarea></td>
-            </tr>
-            <tr>
-                <td colspan="2"> <input type="submit" id="Submit" name="Submit" value="Kommentieren" style="margin-left:35px;"/></td>
-            </tr>
-         </table>
-           
-          
-            @*<input name="NewCommentText" type="text" value="" id="NewCommentText" aria-multiline="true">*@
 
-           
-        }
+                </div>
+                <div class="panel-body">
+                    @Html.Raw(item.Text)
+                </div>
             </div>
+        }
+    </table>
+    <hr />
+    <div id="commentForm">
+        @using (Html.BeginForm("NewComment", "Account", new { @EntryId = ViewBag.EntryId }, FormMethod.Post, new { }))
+        {
+        
+            <div class="panel panel-warning">
+                <div class="panel-heading">Neuer Kommentar verfassen</div>
+                <div class="panel-body">
 
-   
+                    <div class="form-group">
+                        <p><b>Titel</b>  </p>
+                        <input name="NewCommentTitle" id="NewCommentTitle" class="form-control" type="text" /><br />
+
+
+                        <p><b>Text</b></p>
+                        <textarea class="form-control" rows="5" cols="1" name="NewCommentText" id="NewCommentText"></textarea><br />
+                        <input class="btn btn-default" type="submit" id="Submit" name="Submit" value="Kommentieren" />
+
+                    </div>
+                </div>
+            </div>
+            
+            
+           
+            
+
+           
+        }
+    </div>
+
+
 </div>
