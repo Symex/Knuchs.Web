@@ -23,9 +23,9 @@
                         @Html.DisplayFor(modelItem => item.CreatedOn)<br />
                         <br />
 
-                        <a href="@Url.Action("EditBlogEntry","Account", new{entryId = item.Id})" class="orange-text-link"><span class="glyphicon glyphicon-edit"> </span></a>
+                        <a type="button" href="@Url.Action("EditBlogEntry","Account", new{entryId = item.Id})" class="btn btn-warning"><span class="glyphicon glyphicon-edit"> </span></a>
                         <br />
-                        <a href="@Url.Action("DeleteBlogEntry","Account", new{entryId = item.Id})" class="DeleteLink  orange-text-link"><span class="glyphicon glyphicon-remove-sign"> </span></a>
+                        <a type="button" href="@Url.Action("DeleteBlogEntry","Account", new{entryId = item.Id})" style="margin-top:5px;" class="DeleteLink  btn btn-danger"><span class="glyphicon glyphicon-remove-sign"> </span></a>
 
                     </td>
 

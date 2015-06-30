@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Benutzerverwaltung";
 }
-<div class="loginWrapper">
+<div class="contentWrapper">
     <div class="panel panel-default">
         <div class="panel-heading">
             @ViewBag.Title
@@ -17,38 +17,37 @@
                 <th>Email</th>
                 <th>News</th>
                 <th>Admin</th>
-                <th></th>
-                <th>Delete</th>
+                <th style="max-width: 5px; width: 5px;"></th>
+                <th style="max-width: 5px; width:5px;"></th>
             </tr>
             @foreach (var usr in Model)
             {
                 <tr>
                     <td>@usr.Username</td>
                     <td>@usr.Email</td>
-                    <td >@usr.HasNewsletter</td>
+                    <td>@usr.HasNewsletter</td>
                     <td>@usr.IsAdmin</td>
                     <td>
-                        @if (!usr.IsAdmin)                            
+                        @if (!usr.IsAdmin)
                         {
-                          <a href ="@Url.Action("MakeUserAdmin","Account", new { @UserId = usr.Id, @MakeAdmin = true })" class="orange-text-link"><span class="glyphicon glyphicon-plus-sign"></span></a>
-
-}
-                        else if(usr.Username != "Syme")
+                            <a type="button" href ="@Url.Action("MakeUserAdmin", "Account", new { @UserId = usr.Id, @MakeAdmin = true })" class=" btn btn-warning"><span class="glyphicon glyphicon-plus-sign"></span></a>
+                        }
+                        else if (usr.Username != "Syme")
                         {
-                            <a href ="@Url.Action("MakeUserAdmin","Account", new { @UserId = usr.Id, @MakeAdmin = false })" class="orange-text-link"><span class="glyphicon glyphicon-minus-sign"></span></a>
-}
-                        &nbsp;
-
+                            <a type="button" href="@Url.Action("MakeUserAdmin", "Account", new { @UserId = usr.Id, @MakeAdmin = false })" class=" btn btn-warning"><span class="glyphicon glyphicon-minus-sign"></span></a>
+                        }
                     </td>
                     <td class="centered-content">
-                        <a href="@Url.Action("DeleteUser", "Account", new { @UserId = usr.Id })" class="DeleteLink orange-text-link"><span class="glyphicon glyphicon-remove-sign"></span></a>
-
+                        @if (usr.Username != "Syme")
+                        {
+                            <a href="@Url.Action("DeleteUser", "Account", new { @UserId = usr.Id })" class="DeleteLink  btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                        }
                     </td>
                 </tr>   
             }
         </table>
     </div>
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -59,7 +58,8 @@
         if (!window.confirm("Möchtest du diesen Benutzer wirklich löschen?")) {
             e.preventDefault();
         }
-       // bootbox.confirm("U Sure?", callback);
+        // bootbox.confirm("U Sure?", callback);
     });
 
 </script>
+    </div>

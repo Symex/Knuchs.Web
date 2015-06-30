@@ -18,9 +18,9 @@
 
         @foreach (var item in Model)
         {
-            <div class="panel panel-default">
+            <div class="panel panelcomment panel-default">
                 <div class="panel-heading">
-                    <div class="float-left fixed-width-200">@Html.Raw(item.Title) </div>
+                    <div class="float-left fixed-width-200"><b>@Html.Raw(item.Title)</b> </div>
                     <div class="float-left">
                         @if (item.IsAdmin)
                         { 
@@ -32,8 +32,8 @@
                         }
 
                     </div>
-
-                    <div style="clear: right;">@item.CreatedOn.ToString("g")</div>
+                    <br />
+                    <div style="clear: right; color: darkgray;">@item.CreatedOn.ToString("g")</div>
 
                     @* Löschen Button *@
                     @if (HttpContext.Current.Session["KnuchsSession"] != null)
@@ -47,8 +47,8 @@
                                 {
                         <div class="float-right margin-top-negative20">
                             @*@Html.ActionLink("X", "DeleteComment", "Account", new { id = item.Id }, new { @Class = "DeleteLink" })*@
-                            <a href="@Url.Action("DeleteComment", "Account", new { id = item.Id })" class="DeleteLink orange-text-link">
-                                <span class="glyphicon glyphicon-remove-sign"></span>
+                            <a type="button" href="@Url.Action("DeleteComment", "Account", new { id = item.Id })" class="btn btn-danger margin-top-negative20 DeleteLink">
+                                  <span class="glyphicon glyphicon-remove-sign"></span> 
                             </a>
                         </div> 
                                 }
