@@ -145,6 +145,18 @@ width: 30%;
     resize: none;
 
 }
+.orange-text-link:hover {
+        color: orange;
+}
+.orange-text-link:visited:hover {
+        color: orange;
+}
+.orange-text-link:visited {
+    color: black;
+}
+.orange-text-link {
+    color: black;
+}
 .centered-content {
     text-align: center !important;
 }

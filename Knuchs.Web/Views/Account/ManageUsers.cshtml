@@ -28,12 +28,22 @@
                     <td >@usr.HasNewsletter</td>
                     <td>@usr.IsAdmin</td>
                     <td>
-                        @if (!usr.IsAdmin)
-                        {@Html.ActionLink("Upgrade", "MakeUserAdmin", "Account", new { @UserId = usr.Id }, new { })}
+                        @if (!usr.IsAdmin)                            
+                        {
+                          <a href ="@Url.Action("MakeUserAdmin","Account", new { @UserId = usr.Id, @MakeAdmin = true })" class="orange-text-link"><span class="glyphicon glyphicon-plus-sign"></span></a>
+
+}
+                        else if(usr.Username != "Syme")
+                        {
+                            <a href ="@Url.Action("MakeUserAdmin","Account", new { @UserId = usr.Id, @MakeAdmin = false })" class="orange-text-link"><span class="glyphicon glyphicon-minus-sign"></span></a>
+}
                         &nbsp;
 
                     </td>
-                    <td class="centered-content">@Html.ActionLink("X", "DeleteUser", "Account", new { @UserId = usr.Id }, new { })</td>
+                    <td class="centered-content">
+                        <a href="@Url.Action("DeleteUser", "Account", new { @UserId = usr.Id })" class="DeleteLink orange-text-link"><span class="glyphicon glyphicon-remove-sign"></span></a>
+
+                    </td>
                 </tr>   
             }
         </table>
@@ -43,3 +53,13 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+    $(".DeleteLink").click(function (e) {
+        if (!window.confirm("Möchtest du diesen Benutzer wirklich löschen?")) {
+            e.preventDefault();
+        }
+       // bootbox.confirm("U Sure?", callback);
+    });
+
+</script>

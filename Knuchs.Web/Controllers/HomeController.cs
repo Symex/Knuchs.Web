@@ -19,9 +19,16 @@ namespace Knuchs.Web.Controllers
             {
                 using (var dc = new DataContext())
                 {
+                    var listVm = new List<BlogEntryViewModel>();
                     model = dc.BlogEntries.Where(m => m.Id > 0).ToList();
-                    model.OrderByDescending(m => m.CreatedOn);
-                    return View("Blog", model);
+                    model = model.OrderByDescending(m => m.CreatedOn).ToList();
+                    foreach(var b in model)
+                    {
+                        var cmts = dc.Comments.Where(c => c.RefBlogEntry.Id == b.Id);
+                        var vm = ViewModelParser.GetVMFromBlogEntry(b, cmts.Count());
+                        listVm.Add(vm);
+                    }
+                    return View("Blog", listVm);
                 }
             }
             catch (Exception ex)
@@ -40,24 +47,29 @@ namespace Knuchs.Web.Controllers
             return View();
         }
 
-        public ActionResult ShowComments(int entryId)
-        {
-            using (var dc = new DataContext())
+        public ActionResult SearchBlog(string SearchTerm)
+        { 
+            var model  = new List<BlogEntryViewModel>();
+            using (var db = new DataContext())
             {
-                ViewBag.EntryId = entryId;
-                var entry = dc.BlogEntries.First(m => m.Id == entryId);
-                ViewBag.Heading = "Discussion for Topic: " + entry.Title;
-                var comments = dc.Comments.Where(m => m.RefBlogEntry.Id == entryId).OrderByDescending(m=> m.CreatedOn).ToList<Comment>();
-                var vmCmts = new List<CommentViewModel>();
-                foreach (var cmt in comments)
+                var entriesBody = db.BlogEntries.Where(b => b.Text.Contains(SearchTerm)).ToList();
+                foreach (var b in entriesBody)
                 {
-                    vmCmts.Add(ViewModelParser.GetViewModelFromComment(cmt));
+                    var cmts = db.Comments.Where(m => m.RefBlogEntry.Id == b.Id).Count();
+                    model.Add(ViewModelParser.GetVMFromBlogEntry(b, cmts));
                 }
-
-
-                return View("Discussion", vmCmts);
+            }
+            if (model.Count > 0)
+            {
+                ViewBag.Searchresult = true;
+                return View("Blog", model);
+            }
+            else 
+            {
+                ViewBag.Searchresult = false;
+               // model.Add(new BlogEntryViewModel(){ CommentsCount = 0, Id = 0, Title = "Suchergebnisse", Text = "Zu deiner Suche wurden keine Blog-Einträge gefunden"});
+                return View("Blog", model);
             }
         }
-
     }
 }

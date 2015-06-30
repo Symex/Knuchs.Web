@@ -236,6 +236,7 @@
       <DependentUpon>201506231053016_CommentDate1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BlogEntryViewModel.cs" />
     <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\BlogEntry.cs" />
@@ -395,7 +396,8 @@
     </Content>
     <Content Include="Views\Account\CreateUser.cshtml" />
     <Content Include="Views\Account\ManageBlogEntries.cshtml" />
-    <Content Include="Views\Home\Discussion.cshtml" />
+    <Content Include="Views\Account\Discussion.cshtml" />
+    <Content Include="Views\Account\EditMyProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

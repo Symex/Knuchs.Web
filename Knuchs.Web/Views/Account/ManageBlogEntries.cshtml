@@ -3,32 +3,47 @@
 @{
     ViewBag.Title = "ManageBlogEntries";
 }
+<div class="contentWrapper">
 
-<div class="panel panel-default">
-  <!-- Default panel contents -->
-  <div class="panel-heading">Blogverwaltung</div>
-  <div class="panel-body">
-    <p>Du kannst hier alle Einträge verwalten, neue  @Html.ActionLink("erstellen", "WriteEntry","Account") sowie bestehende löschen.</p>
-      
-  </div>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Blogverwaltung</div>
+        <div class="panel-body">
+            <p>Du kannst hier alle Einträge verwalten, neue  @Html.ActionLink("erstellen", "WriteEntry", "Account") sowie bestehende löschen.</p>
 
-  <table class="table">
-   @foreach (var item in Model) {
-    <tr>
-        <td class="fixed-width-200">
-          <b>  @Html.DisplayFor(modelItem => item.Title) </b><br />
-             @Html.DisplayFor(modelItem => item.CreatedOn)<br /><br />
-                   
-            @Html.ActionLink("Edit", "EditBlogEntry", new { entryId=item.Id }) <br />
-            @Html.ActionLink("Delete", "DeleteBlogEntry", new { entryId=item.Id })
+        </div>
 
-        </td>
-           
-        <td class="cutCell">
-            @Html.Raw(item.Text)
-        </td>
-    </tr>
-}
+        <table class="table">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="fixed-width-200">
+                        <b>@Html.DisplayFor(modelItem => item.Title) </b>
+                        <br />
+                        @Html.DisplayFor(modelItem => item.CreatedOn)<br />
+                        <br />
 
-  </table>
+                        <a href="@Url.Action("EditBlogEntry","Account", new{entryId = item.Id})" class="orange-text-link"><span class="glyphicon glyphicon-edit"> </span></a>
+                        <br />
+                        <a href="@Url.Action("DeleteBlogEntry","Account", new{entryId = item.Id})" class="DeleteLink  orange-text-link"><span class="glyphicon glyphicon-remove-sign"> </span></a>
+
+                    </td>
+
+                    <td class="cutCell">
+                        @Html.Raw(item.Text)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+    <script>
+        $(".DeleteLink").click(function (e) {
+            if (!window.confirm("Möchtest du diesen Beitrag und seine verknüpften Kommentare wirklich löschen?")) {
+                e.preventDefault();
+            }
+        });
+
+    </script>
 </div>

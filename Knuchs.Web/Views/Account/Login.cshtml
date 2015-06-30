@@ -12,31 +12,24 @@
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
 
-        
-
-           
-                
-                @Html.LabelFor(m => m.Username) <br />
+                <b>Benutzername</b> <br />
                 @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Username)
-               
-                @Html.LabelFor(m => m.Password)<br />
+                <p style="color: orange">  @Html.ValidationMessageFor(m => m.Username)</p>
+                @*<br />*@
+                <b>Passwort</b><br />
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Password)
+                <p style="color: orange">   @Html.ValidationMessageFor(m => m.Password)</p>
                
-               @* <p class="float-left">@Html.LabelFor(m => m.RememberMe, new { @class = "checkbox", @checked = true })</p>
+                <p class="float-left">@Html.LabelFor(m => m.RememberMe, new { @class = "checkbox", @checked = true })
                 @Html.CheckBoxFor(m => m.RememberMe)<br />
-
-           
-               
-                *@
-                <br />
-                <input type="submit" value="Anmelden" class="btn btn-default clear" />
+                </p>
+                
+                <br /><br /><br /><br />
+                <p><input type="submit" value="Anmelden" class="btn btn-default clear" /></p>
              
   
                 <p>Du besitzt noch kein Konto? Jetzt @Html.ActionLink("Registrieren", "Register")!</p>
-    
-                         @Html.HiddenFor(m => m.ReturnUrl)
+                 @Html.HiddenFor(m => m.ReturnUrl)
             }
         </div>
     </div>

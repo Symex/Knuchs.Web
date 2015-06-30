@@ -45,8 +45,12 @@
                             {
                                 if (sess.CurrentUser.IsAdmin)
                                 {
-                        <div class="float-right margin-top-negative20">@Html.ActionLink("X", "DeleteComment", "Account", new { id = item.Id }, new { @Class = "DeleteLink" })</div>
-                                  
+                        <div class="float-right margin-top-negative20">
+                            @*@Html.ActionLink("X", "DeleteComment", "Account", new { id = item.Id }, new { @Class = "DeleteLink" })*@
+                            <a href="@Url.Action("DeleteComment", "Account", new { id = item.Id })" class="DeleteLink orange-text-link">
+                                <span class="glyphicon glyphicon-remove-sign"></span>
+                            </a>
+                        </div> 
                                 }
                             }
                         }
@@ -63,7 +67,6 @@
     <div id="commentForm">
         @using (Html.BeginForm("NewComment", "Account", new { @EntryId = ViewBag.EntryId }, FormMethod.Post, new { }))
         {
-        
             <div class="panel panel-warning">
                 <div class="panel-heading">Neuer Kommentar verfassen</div>
                 <div class="panel-body">
@@ -72,22 +75,39 @@
                         <p><b>Titel</b>  </p>
                         <input name="NewCommentTitle" id="NewCommentTitle" class="form-control" type="text" /><br />
 
+                        @if (!string.IsNullOrEmpty(ViewBag.ErrorTitle))
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                @ViewBag.ErrorTitle
+                            </div>
+                        }
 
                         <p><b>Text</b></p>
                         <textarea class="form-control" rows="5" cols="1" name="NewCommentText" id="NewCommentText"></textarea><br />
-                        <input class="btn btn-default" type="submit" id="Submit" name="Submit" value="Kommentieren" />
 
+                        @if (!string.IsNullOrEmpty(ViewBag.ErrorText))
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                @ViewBag.ErrorText
+                            </div>
+                        }
+                        <input class="btn btn-default" type="submit" id="Submit" name="Submit" value="Kommentieren" />
                     </div>
                 </div>
-            </div>
-            
-            
-           
-            
-
-           
+            </div>           
         }
     </div>
-
-
 </div>
+<script>
+    $(".DeleteLink").click(function (e) {
+        if (!window.confirm("Möchtest du diesen Kommentar wirklich löschen?")) {
+            e.preventDefault();
+        }
+        // bootbox.confirm("U Sure?", callback);
+    });
+
+</script>

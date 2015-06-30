@@ -22,7 +22,7 @@ namespace Knuchs.Web.Controllers
     {
 
         #region AnonymousActions
-    
+
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -41,24 +41,30 @@ namespace Knuchs.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LoginCallBack(LoginModel u)
         {
-            if (IsValidUser(u))
+            try
             {
-                using (var _db = new DataContext())
+                if (IsValidUser(u))
                 {
-                    HttpContext.GetSession().CurrentUser = _db.Users.First(m => m.Password == u.Password && u.Username == m.Username);
-                    if (u.RememberMe)
+                    using (var _db = new DataContext())
                     {
+                        HttpContext.GetSession().CurrentUser = _db.Users.First(m => m.Password == u.Password && u.Username == m.Username);
+                        if (u.RememberMe)
+                        {
                             var json = JsonConvert.SerializeObject(HttpContext.GetSession().CurrentUser);
                             var userCookie = new HttpCookie("RememberTheKnuchs", json);
                             userCookie.Expires.AddDays(30);
                             HttpContext.Response.SetCookie(userCookie);
 
                             return RedirectToLocal(u.ReturnUrl);
+                        }
                     }
                 }
+                return RedirectToLocal(u.ReturnUrl);
             }
-
-            return RedirectToLocal(u.ReturnUrl);
+            catch
+            {
+                return View("Login", u);
+            }
 
         }
 
@@ -68,10 +74,11 @@ namespace Knuchs.Web.Controllers
             return View();
         }
 
+        //callback
         [AllowAnonymous]
         public ActionResult RegisterUser(User u, string pwcheck)
         {
-            if (IsValidRegistration(u,pwcheck))
+            if (IsValidRegistration(u, pwcheck))
             {
                 if (HttpContext.GetSession() != null)
                 {
@@ -81,14 +88,13 @@ namespace Knuchs.Web.Controllers
                         db.SaveChanges();
                     }
                     HttpContext.GetSession().CurrentUser = u;
-                }   
+                }
             }
-            else 
+            else
             {
                 u.Password = "";
                 return View("Register", u);
             }
-
 
             return RedirectToAction("Index", "Home");
         }
@@ -167,12 +173,12 @@ namespace Knuchs.Web.Controllers
         }
 
         [AuthorizeAdmin]
-        public ActionResult MakeUserAdmin(int UserId)
+        public ActionResult MakeUserAdmin(int UserId, bool MakeAdmin)
         {
             using (var db = new DataContext())
             {
                 var user = db.Users.First(u => u.Id == UserId);
-                user.IsAdmin = true;
+                user.IsAdmin = MakeAdmin;
                 db.SaveChanges();
             }
 
@@ -192,7 +198,6 @@ namespace Knuchs.Web.Controllers
                 {
                     db.Comments.Remove(c);
                 }
-
                 db.SaveChanges();
             }
 
@@ -205,6 +210,11 @@ namespace Knuchs.Web.Controllers
             using (var db = new DataContext())
             {
                 var entry = db.BlogEntries.First(e => e.Id == entryId);
+                var cmts = db.Comments.Where(m => m.RefBlogEntry.Id == entry.Id).ToList();
+                foreach (var c in cmts)
+                {
+                    db.Comments.Remove(c);
+                }
                 db.BlogEntries.Remove(entry);
                 db.SaveChanges();
             }
@@ -230,8 +240,8 @@ namespace Knuchs.Web.Controllers
                 db.Comments.Remove(cmt);
                 db.SaveChanges();
 
-                return RedirectToAction("ShowComments", "Home", new { @entryId = eId });//eId });
-            }          
+                return RedirectToAction("ShowComments", "Account", new { @entryId = eId });//eId });
+            }
         }
 
         [AuthorizeAdmin]
@@ -240,7 +250,6 @@ namespace Knuchs.Web.Controllers
             using (var db = new DataContext())
             {
                 u.HasNewsletter = false;
-
                 db.Users.Add(u);
                 db.SaveChanges();
                 ViewBag.Message = "Der User wurde erfolgreich erstellt.";
@@ -249,27 +258,63 @@ namespace Knuchs.Web.Controllers
             return RedirectToAction("ManageUsers", "Account");
         }
 
-
         #endregion
 
         #region UserActions
 
+        public ActionResult EditMyProfile()
+        {
+            using (var db = new DataContext())
+            {
+                var myProfile = db.Users.FirstOrDefault(u => u.Id == HttpContext.GetSession().CurrentUser.Id);
+                return View("EditMyProfile", myProfile);
+            }
+        }
+
+        [AuthorizeUser]
+        public ActionResult ShowComments(int entryId)
+        {
+            using (var dc = new DataContext())
+            {
+                ViewBag.EntryId = entryId;
+                var entry = dc.BlogEntries.First(m => m.Id == entryId);
+                ViewBag.Heading = "Kommentare zu: " + entry.Title;
+                var comments = dc.Comments.Where(m => m.RefBlogEntry.Id == entryId).OrderByDescending(m => m.CreatedOn).ToList<Comment>();
+                var vmCmts = new List<CommentViewModel>();
+                foreach (var cmt in comments)
+                {
+                    vmCmts.Add(ViewModelParser.GetViewModelFromComment(cmt));
+                }
+
+
+                return View("Discussion", vmCmts);
+            }
+        }
+
         [AuthorizeUser]
         public ActionResult NewComment(string NewCommentText, int EntryId, string NewCommentTitle)
         {
-            using(var dc = new DataContext())
+
+            if (string.IsNullOrEmpty(NewCommentText) || NewCommentText.Length < 10) 
             {
-                var entry = dc.BlogEntries.First(m=>m.Id == EntryId);
+                ViewBag.ErrorText = "Dein Kommentar muss mehr als 10 Zeichen enthalten.";
+            }
+            if (string.IsNullOrEmpty(NewCommentTitle))
+            {
+                ViewBag.ErrorText = "Du musst deinem Kommentar einen Titel geben.";
+            }
+            using (var dc = new DataContext())
+            {
+                var entry = dc.BlogEntries.First(m => m.Id == EntryId);
                 var aidee = HttpContext.GetSession().CurrentUser.Id;
 
                 var user = dc.Users.First(m => m.Id == aidee);
-                var cmt = new Comment(){
-              
-                CreatedOn = DateTime.Now,
-                Text = NewCommentText,
-                Title = NewCommentTitle,
+                var cmt = new Comment()
+                {
+                    CreatedOn = DateTime.Now,
+                    Text = NewCommentText,
+                    Title = NewCommentTitle,
                 };
-
                 dc.Comments.Add(cmt);
                 dc.SaveChanges();
 
@@ -280,12 +325,10 @@ namespace Knuchs.Web.Controllers
                 dc.Entry(cmt).State = EntityState.Modified;
                 dc.Entry(cmt.RefBlogEntry).State = EntityState.Modified;
                 dc.Entry(cmt.RefUser).State = EntityState.Modified;
-
-
                 dc.SaveChanges();
             }
             //Return Discussion for given Entry ID
-            return RedirectToAction("ShowComments", "Home" , new { entryId = EntryId });
+            return RedirectToAction("ShowComments", "Account", new { entryId = EntryId });
         }
 
         [AuthorizeUser]
@@ -323,13 +366,14 @@ namespace Knuchs.Web.Controllers
         {
             using (var _db = new DataContext())
             {
-                var usr = _db.Users.First(m => m.Username == u.Username && m.Password == u.Password);
+                var usr = _db.Users.FirstOrDefault(m => m.Username == u.Username && m.Password == u.Password);
                 if (usr != null)
                 {
                     HttpContext.GetSession().CurrentUser = usr;
                     return true;
                 }
                 HttpContext.GetSession().CurrentUser = null;
+                ModelState.AddModelError("Username", "Die Kombination aus Benutzername und Passwort ist ungültig.");
                 return false;
             }
         }
@@ -348,26 +392,29 @@ namespace Knuchs.Web.Controllers
             }
             if (u.Password != pwcheck)
             {
-                valid = false; 
+                valid = false;
                 ModelState.AddModelError("Password", "Passwörter stimmen nicht überein.");
-            }else if( u.Password.Length < 6)
+            }
+            else if (u.Password.Length < 6)
             {
                 ModelState.AddModelError("Password", "Wähle ein Passwort mit mindestens 6 Stellen.");
             }
 
-            try {
+            try
+            {
                 var m = new MailAddress(u.Email);
-                using(var db = new DataContext()){
-                  
-                   var usrMail = db.Users.FirstOrDefault(usr => usr.Email == u.Email);
-                   if(usrMail != null)
+                using (var db = new DataContext())
+                {
+
+                    var usrMail = db.Users.FirstOrDefault(usr => usr.Email == u.Email);
+                    if (usrMail != null)
                     {
                         valid = false;
                         ModelState.AddModelError("Email", "Diese Mail-Adresse wurde bereits vergeben.");
                     }
                 }
             }
-            catch 
+            catch
             {
                 valid = false;
                 ModelState.AddModelError("Email", "Keine gültige Email Adresse");
@@ -379,22 +426,22 @@ namespace Knuchs.Web.Controllers
                 valid = false;
                 ModelState.AddModelError("Username", "Gib einen Benutzernamen an!");
             }
-            else {
+            else
+            {
                 using (var db = new DataContext())
                 {
                     var usrNme = db.Users.FirstOrDefault(m => m.Username == u.Username);
-                  
+
 
                     if (usrNme != null)
                     {
                         valid = false;
                         ModelState.AddModelError("Username", "Der Benutzername ist bereits vergeben.");
                     }
-                 
+
 
                 }
             }
-
             return valid;
         }
 

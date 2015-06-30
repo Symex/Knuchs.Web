@@ -28,5 +28,17 @@ namespace Knuchs.Web.Helper
                 return null;
             }
         }
+
+        public static BlogEntryViewModel GetVMFromBlogEntry(BlogEntry b, int p)
+        {
+            var bvm = new BlogEntryViewModel();
+            bvm.CommentsCount = p;
+            bvm.CreatedOn = b.CreatedOn;
+            bvm.Id = b.Id;
+            bvm.Text = b.Text;
+            bvm.Title = b.Title;
+            return bvm;
+
+        }
     }
 }
