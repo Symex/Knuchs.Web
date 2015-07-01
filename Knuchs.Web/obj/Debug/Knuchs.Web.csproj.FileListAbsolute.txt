@@ -137,3 +137,4 @@ C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Http.xml
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Http.WebHost.xml
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.CommentDate.resources
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.CommentDate1.resources
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.favo.resources

@@ -48,6 +48,7 @@ namespace Knuchs.Web.Controllers
                     using (var _db = new DataContext())
                     {
                         HttpContext.GetSession().CurrentUser = _db.Users.First(m => m.Password == u.Password && u.Username == m.Username);
+
                         if (u.RememberMe)
                         {
                             var json = JsonConvert.SerializeObject(HttpContext.GetSession().CurrentUser);
@@ -55,11 +56,16 @@ namespace Knuchs.Web.Controllers
                             userCookie.Expires.AddDays(30);
                             HttpContext.Response.SetCookie(userCookie);
 
-                            return RedirectToLocal(u.ReturnUrl);
+                            //return RedirectToLocal(u.ReturnUrl);
                         }
                     }
+                    if (HttpContext.GetSession().CurrentUser != null)
+                    {
+                        LoadFavouritesInSession();
+                    }
+                    return RedirectToLocal(u.ReturnUrl);
                 }
-                return RedirectToLocal(u.ReturnUrl);
+                return View("Login", u);
             }
             catch
             {
@@ -67,6 +73,35 @@ namespace Knuchs.Web.Controllers
             }
 
         }
+
+        private void LoadFavouritesInSession()
+        {
+            var lsFav = new List<Favourite>();
+            var lsFavBlog = new List<BlogEntryViewModel>();
+            using (var _db = new DataContext())
+            {
+
+                if (HttpContext.GetSession().CurrentUser != null)
+                {
+                    var uId = HttpContext.GetSession().CurrentUser.Id;
+                    lsFav = _db.Favourites.Where(f => f.RefFavUser.Id == uId).Include("RefFavBlog").Distinct().ToList();
+                }
+            }
+            using (var db = new DataContext())
+            {
+                foreach (var f in lsFav)
+                {
+                    var be = f.RefFavBlog;
+                    var cmts = db.Comments.Where(c => c.RefBlogEntry.Id == be.Id);
+
+                    var beVm = ViewModelParser.GetVMFromBlogEntry(be, cmts.Count());
+
+                    lsFavBlog.Add(beVm);
+                }
+                HttpContext.GetSession().CurrentFavourites = lsFavBlog;
+            }
+        }
+
 
         [AllowAnonymous]
         public ActionResult Register()
@@ -262,13 +297,125 @@ namespace Knuchs.Web.Controllers
 
         #region UserActions
 
+        [AuthorizeUser]
+        public ActionResult MakeMyFavourite(int userId, int blogId, bool fav)
+        {
+            if (fav)
+            {
+                using (var db = new DataContext())
+                {
+                    var entry = db.BlogEntries.FirstOrDefault(b => b.Id == blogId);
+                    var user = db.Users.FirstOrDefault(u => u.Id == userId);
+
+                    db.Favourites.Add(new Favourite() { RefFavBlog = entry, RefFavUser = user });
+                    db.SaveChanges();
+                }
+            }
+            else
+            {
+                using (var db = new DataContext())
+                {
+                    var fv = db.Favourites.FirstOrDefault(f => f.RefFavUser.Id == userId && f.RefFavBlog.Id == blogId);
+                    db.Favourites.Remove(fv);
+                    db.SaveChanges();
+                }
+            }
+
+            LoadFavouritesInSession();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [AuthorizeUser]
         public ActionResult EditMyProfile()
         {
             using (var db = new DataContext())
             {
-                var myProfile = db.Users.FirstOrDefault(u => u.Id == HttpContext.GetSession().CurrentUser.Id);
+                var curruser = HttpContext.GetSession().CurrentUser.Id;
+                var myProfile = db.Users.FirstOrDefault(u => u.Id == curruser);
                 return View("EditMyProfile", myProfile);
             }
+        }
+
+        [HttpPost]
+        [AuthorizeUser]
+        public ActionResult SaveProfileChanges(string OldPW, string NewPW, string NewPW2, User user)
+        {
+            HttpPostedFileBase f = null;
+            if (HttpContext.Request.Files.Count > 0)
+            {
+                f = HttpContext.Request.Files[0];
+            }
+            var u = HttpContext.GetSession().CurrentUser;
+
+            using (var db = new DataContext())
+            {
+                db.Users.Attach(u);
+                if (f != null)
+                {
+                    var ext = f.FileName.Split('.').LastOrDefault();
+                    if (ext == "jpg" || ext == "png" || ext == "gif")
+                    {
+                        var path = HttpContext.Server.MapPath("~/_Upload/profile_p_" + u.Id + ".jpg");
+                        f.SaveAs(path);
+                        u.PictureLink = path;
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Picture", "Ungültiges Dateiformat");
+                    }
+                }
+                if (!string.IsNullOrEmpty(user.Email))
+                {
+                    u.Email = user.Email;
+                }
+                if (!string.IsNullOrEmpty(OldPW))
+                {
+                    if (u.Password == OldPW)
+                    {
+                        if (NewPW == NewPW2)
+                        {
+                            u.Password = NewPW;
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("NewPW", "Die neuen Passwörter stimmen nicht überein.");
+                        }
+                    }
+                    else if (!string.IsNullOrEmpty(NewPW) || !string.IsNullOrEmpty(NewPW2))
+                    {
+                        ModelState.AddModelError("OldPW", "Gib das aktuelle Passwort ein");
+                    }
+                }
+                if((!string.IsNullOrEmpty(NewPW) || !string.IsNullOrEmpty(NewPW2)) && string.IsNullOrEmpty(OldPW) ){
+                    ModelState.AddModelError("OldPW", "Gib dein altes Passwort ein um ein neues zu erstellen.");
+                }
+                db.SaveChanges();
+            }
+
+            if (ModelState.IsValid)
+            {
+                HttpContext.GetSession().CurrentUser = u;
+                ViewBag.Message = "Deine Änderungen wurden übernommen!";
+                ViewBag.Error = "";
+                return View("EditMyProfile",u);
+            }
+            else
+            {
+                HttpContext.GetSession().CurrentUser = u;
+                ViewBag.Message = "Bearbeite die gekennzeichneten Felder und versuche es erneut.";
+                return View("EditMyProfile",u);
+            }
+        }
+
+        [AuthorizeUser]
+        public ActionResult MyFavourites()
+        {
+            var u = HttpContext.GetSession().CurrentUser;
+
+
+            var lsEntry = HttpContext.GetSession().CurrentFavourites;
+            return View("Favorites", lsEntry);
         }
 
         [AuthorizeUser]
@@ -295,7 +442,7 @@ namespace Knuchs.Web.Controllers
         public ActionResult NewComment(string NewCommentText, int EntryId, string NewCommentTitle)
         {
 
-            if (string.IsNullOrEmpty(NewCommentText) || NewCommentText.Length < 10) 
+            if (string.IsNullOrEmpty(NewCommentText) || NewCommentText.Length < 10)
             {
                 ViewBag.ErrorText = "Dein Kommentar muss mehr als 10 Zeichen enthalten.";
             }
@@ -336,11 +483,11 @@ namespace Knuchs.Web.Controllers
         {
             //Destroy Cookie if there is one 
             HttpContext.GetSession().CurrentUser = null;
-            if (Request.Cookies["RememberTheKnuchs"] != null)
+            if (Response.Cookies["RememberTheKnuchs"] != null)
             {
                 var c = new HttpCookie("RememberTheKnuchs");
                 c.Expires = DateTime.Now.AddDays(-1);
-                Response.Cookies.Add(c);
+                Request.Cookies.Add(c);
             }
 
             return RedirectToAction("Index", "Home");

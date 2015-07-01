@@ -33,7 +33,6 @@ namespace Knuchs.Web.Controllers
             }
             catch (Exception ex)
             {
-
                 model.Add(new BlogEntry() { Text = ex.Message });
 
                 return View("Blog", model);

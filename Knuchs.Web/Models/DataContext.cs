@@ -19,6 +19,7 @@ namespace Knuchs.Web.Models
         public DbSet<Comment> Comments { get; set; }
         public DbSet<BlogEntry> BlogEntries { get; set; }
         public DbSet<Links> Links { get; set; }
+        public DbSet<Favourite> Favourites { get; set; }
     }
 
 }

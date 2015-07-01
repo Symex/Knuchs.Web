@@ -20,6 +20,8 @@ namespace Knuchs.Web.Helper
                 cvm.Text = cmt.Text;
                 cvm.Id = cmt.Id;
                 cvm.IsAdmin = cmt.RefUser.IsAdmin;
+                cvm.UserImgPath = cmt.RefUser.PictureLink;
+                cvm.UserId = cmt.RefUser.Id;
 
                 return cvm;
             }

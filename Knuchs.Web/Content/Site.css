@@ -5,14 +5,22 @@
 
 body {
     background: url("/Content/Img/bg2.png");
+
+}
+h2 {
+ color: white !important;
 }
 .contentWrapper {
     width: 80%;
     min-height: 100% !important;
 
     margin: auto !important;
-    background-color: white;
+    background-color: rgba(0, 0, 0,0.5);
     padding: 30px;
+    -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+   
 }
 #NewCommentText {
     resize: none;
@@ -84,3 +92,41 @@ display: block;
     margin-bottom: 20px !important;
 }
 
+.favContainer {
+  margin-top: -40px;
+  margin-right: 70px;
+}
+
+.splitPanel-Right {
+ word-break: break-all;
+  margin-left: 80px;
+    display: inline-block;
+}
+.splitPanel-Left {
+    margin-left: -15px;
+  margin-right: 10px;
+  margin-top: -10px;
+  padding: 5px;
+  float: left;
+}
+
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}

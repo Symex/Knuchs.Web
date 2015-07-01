@@ -235,12 +235,17 @@
     <Compile Include="Migrations\201506231053016_CommentDate1.Designer.cs">
       <DependentUpon>201506231053016_CommentDate1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507010904113_favo.cs" />
+    <Compile Include="Migrations\201507010904113_favo.Designer.cs">
+      <DependentUpon>201507010904113_favo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlogEntryViewModel.cs" />
     <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\BlogEntry.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Favourite.cs" />
     <Compile Include="Models\KnuchsSession.cs" />
     <Compile Include="Models\Links.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -398,9 +403,11 @@
     <Content Include="Views\Account\ManageBlogEntries.cshtml" />
     <Content Include="Views\Account\Discussion.cshtml" />
     <Content Include="Views\Account\EditMyProfile.cshtml" />
+    <Content Include="Views\Account\Favorites.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="_Upload\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -417,6 +424,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506231053016_CommentDate1.resx">
       <DependentUpon>201506231053016_CommentDate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507010904113_favo.resx">
+      <DependentUpon>201507010904113_favo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

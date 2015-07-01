@@ -6,6 +6,7 @@
 <div class="contentWrapper">
     <h2>@ViewBag.Heading</h2>
 
+    <a href="#NewCommentTitle" type="button" style="margin-bottom: 10px;" class="btn btn-success"><span class="glyphicon glyphicon-comment"></span>&nbsp; Kommentieren </a>
     <table id="comments">
         @if (Model.Count() < 1)
         { 
@@ -20,8 +21,9 @@
         {
             <div class="panel panelcomment panel-default">
                 <div class="panel-heading">
-                    <div class="float-left fixed-width-200"><b>@Html.Raw(item.Title)</b> </div>
-                    <div class="float-left">
+                    <div class="splitPanel-Left">
+                        <img height="50" width="50" src="@Url.Content("~/_Upload/profile_p_" + @item.UserId + ".jpg")" /></div>
+                    <div class="float-left fixed-width-200">
                         @if (item.IsAdmin)
                         { 
                             @Html.Raw("<b style=\"color:orange;\">" + item.Username + "</b>");
@@ -30,7 +32,8 @@
                         { 
                             @Html.Raw("<b>" + item.Username + "</b>");
                         }
-
+                    </div>
+                    <div class="float-left">
                     </div>
                     <br />
                     <div style="clear: right; color: darkgray;">@item.CreatedOn.ToString("g")</div>
@@ -48,7 +51,7 @@
                         <div class="float-right margin-top-negative20">
                             @*@Html.ActionLink("X", "DeleteComment", "Account", new { id = item.Id }, new { @Class = "DeleteLink" })*@
                             <a type="button" href="@Url.Action("DeleteComment", "Account", new { id = item.Id })" class="btn btn-danger margin-top-negative20 DeleteLink">
-                                  <span class="glyphicon glyphicon-remove-sign"></span> 
+                                <span class="glyphicon glyphicon-remove-sign"></span>
                             </a>
                         </div> 
                                 }
@@ -58,7 +61,7 @@
 
                 </div>
                 <div class="panel-body">
-                    @Html.Raw(item.Text)
+                   <p>@Html.Raw(item.Text)</p>
                 </div>
             </div>
         }

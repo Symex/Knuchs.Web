@@ -1,0 +1,35 @@
+﻿@model List<Knuchs.Web.Models.BlogEntryViewModel>
+@{
+    ViewBag.Title = "Favoriten";
+}
+
+<div class="contentWrapper">
+    @if (Model.Count <= 0)
+    { <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h4><b>Keine Favoriten gefunden.</b></h4>  
+        </div>
+        <div class="panel-body">
+           <p>Erfasse deine Favoriten indem du das Stern Icon auf einem Blog anklickst.</p>
+        </div>
+    </div>
+    }
+    else
+    {
+        foreach (var m in Model)
+        {
+    
+        <div class="panel panel-default" style="margin-bottom: 20px !important;">
+        <div class="panel-heading">
+            <h4><b>@m.Title</b></h4>
+            <b>@m.CreatedOn</b>
+            <div class="float-right"><a type="button" href="@Url.Action("ShowComments", "Account", new { entryId = m.Id })" class="float-right margin-top-negative40 btn btn-success"><span class="glyphicon glyphicon-comment"></span> <b>(@m.CommentsCount)</b></a></div>
+   
+        </div>
+        <div class="panel-body">
+            @Html.Raw(m.Text)
+        </div>
+    </div>
+   
+        }}
+</div>

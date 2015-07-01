@@ -22,8 +22,11 @@ namespace Knuchs.Web.Filters
                 //Check for Remember Me cookie
                 if (ctx.Request.Cookies["RememberTheKnuchs"] != null)
                 {
-                    var user = JsonConvert.DeserializeObject<User>(ctx.Request.Cookies["RememberTheKnuchs"].Value);
-                    ctx.GetSession().CurrentUser = user;
+                    if (!string.IsNullOrEmpty(ctx.Request.Cookies["RememberTheKnuchs"].Value))
+                    {
+                        var user = JsonConvert.DeserializeObject<User>(ctx.Request.Cookies["RememberTheKnuchs"].Value);
+                        ctx.GetSession().CurrentUser = user;
+                    }
                 }
                 return ctx.GetSession().CurrentUser != null;
             }

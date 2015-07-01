@@ -23,13 +23,14 @@
                 <p class="float-left">@Html.LabelFor(m => m.RememberMe, new { @class = "checkbox", @checked = true })
                 @Html.CheckBoxFor(m => m.RememberMe)<br />
                 </p>
+                  @Html.HiddenFor(m => m.ReturnUrl)
                 
                 <br /><br /><br /><br />
                 <p><input type="submit" value="Anmelden" class="btn btn-default clear" /></p>
              
   
                 <p>Du besitzt noch kein Konto? Jetzt @Html.ActionLink("Registrieren", "Register")!</p>
-                 @Html.HiddenFor(m => m.ReturnUrl)
+               
             }
         </div>
     </div>

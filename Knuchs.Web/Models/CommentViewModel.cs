@@ -14,5 +14,7 @@ namespace Knuchs.Web.Models
         public DateTime CreatedOn { get; set; }
         public string Title { get; set; }
         public bool IsAdmin { get; set; }
+        public string UserImgPath { get; set; }
+        public int UserId { get; set; }
     }
 }
