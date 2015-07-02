@@ -16,7 +16,6 @@ namespace Knuchs.Web.Helper
                 cvm.BlogEntryId = cmt.RefBlogEntry.Id;
                 cvm.Username = cmt.RefUser.Username;
                 cvm.CreatedOn = cmt.CreatedOn;
-                cvm.Title = cmt.Title;
                 cvm.Text = cmt.Text;
                 cvm.Id = cmt.Id;
                 cvm.IsAdmin = cmt.RefUser.IsAdmin;

@@ -334,6 +334,8 @@ namespace Knuchs.Web.Controllers
                 var curruser = HttpContext.GetSession().CurrentUser.Id;
                 var myProfile = db.Users.FirstOrDefault(u => u.Id == curruser);
                 var emp = new EditMyProfileViewModel() { User = myProfile };
+                if (string.IsNullOrEmpty(emp.User.PictureLink))
+                    emp.User.PictureLink = "";
                 return View("EditMyProfile", emp);
             }
         }
@@ -359,8 +361,9 @@ namespace Knuchs.Web.Controllers
                         var ext = f.FileName.Split('.').LastOrDefault();
                         if (ext == "jpg" || ext == "png" || ext == "gif")
                         {
-                            var path = HttpContext.Server.MapPath("~/_Upload/profile_p_" + u.Id + ext);
+                            var path = HttpContext.Server.MapPath("~/_Upload/profile_p_" + u.Id + "."+ ext);
                             f.SaveAs(path);
+                            emp.User.PictureLink = path;
                             u.PictureLink = path;
                         }
                         else
@@ -403,12 +406,14 @@ namespace Knuchs.Web.Controllers
                 {
                     ModelState.AddModelError("OldPW", "Gib dein altes Passwort ein um ein neues zu erstellen.");
                 }
+                u.HasNewsletter = emp.User.HasNewsletter;
                 db.SaveChanges();
             }
 
             if (ModelState.IsValid)
             {
                 HttpContext.GetSession().CurrentUser = u;
+                emp.User = u;
                 ViewBag.Message = "Deine Änderungen wurden übernommen!";
                 ViewBag.Error = "";
                 return View("EditMyProfile", emp);
@@ -452,17 +457,14 @@ namespace Knuchs.Web.Controllers
         }
 
         [AuthorizeUser]
-        public ActionResult NewComment(string NewCommentText, int EntryId, string NewCommentTitle)
+        public ActionResult NewComment(string NewCommentText, int EntryId )
         {
 
             if (string.IsNullOrEmpty(NewCommentText) || NewCommentText.Length < 10)
             {
                 ViewBag.ErrorText = "Dein Kommentar muss mehr als 10 Zeichen enthalten.";
             }
-            if (string.IsNullOrEmpty(NewCommentTitle))
-            {
-                ViewBag.ErrorText = "Du musst deinem Kommentar einen Titel geben.";
-            }
+          
             using (var dc = new DataContext())
             {
                 var entry = dc.BlogEntries.First(m => m.Id == EntryId);
@@ -473,7 +475,6 @@ namespace Knuchs.Web.Controllers
                 {
                     CreatedOn = DateTime.Now,
                     Text = NewCommentText,
-                    Title = NewCommentTitle,
                 };
                 dc.Comments.Add(cmt);
                 dc.SaveChanges();

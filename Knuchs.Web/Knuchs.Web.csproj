@@ -239,6 +239,10 @@
     <Compile Include="Migrations\201507010904113_favo.Designer.cs">
       <DependentUpon>201507010904113_favo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507020856403_commenttitlegone.cs" />
+    <Compile Include="Migrations\201507020856403_commenttitlegone.Designer.cs">
+      <DependentUpon>201507020856403_commenttitlegone.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlogEntryViewModel.cs" />
     <Compile Include="Models\CommentViewModel.cs" />
@@ -429,6 +433,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507010904113_favo.resx">
       <DependentUpon>201507010904113_favo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507020856403_commenttitlegone.resx">
+      <DependentUpon>201507020856403_commenttitlegone.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

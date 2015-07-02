@@ -7,7 +7,7 @@
     <h2>@ViewBag.Heading</h2>
 
     <a href="#NewCommentTitle" type="button" style="margin-bottom: 10px;" class="btn btn-success"><span class="glyphicon glyphicon-comment"></span>&nbsp; Kommentieren </a>
-    <table id="comments">
+    
         @if (Model.Count() < 1)
         { 
             <tr>
@@ -65,7 +65,7 @@
                 </div>
             </div>
         }
-    </table>
+    
     <hr />
     <div id="commentForm">
         @using (Html.BeginForm("NewComment", "Account", new { @EntryId = ViewBag.EntryId }, FormMethod.Post, new { }))
@@ -75,19 +75,8 @@
                 <div class="panel-body">
 
                     <div class="form-group">
-                        <p><b>Titel</b>  </p>
-                        <input name="NewCommentTitle" id="NewCommentTitle" class="form-control" type="text" /><br />
-
-                        @if (!string.IsNullOrEmpty(ViewBag.ErrorTitle))
-                        {
-                            <div class="alert alert-danger" role="alert">
-                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                <span class="sr-only">Error:</span>
-                                @ViewBag.ErrorTitle
-                            </div>
-                        }
-
-                        <p><b>Text</b></p>
+                 
+                        <p><b>Kommentar</b></p>
                         <textarea class="form-control" rows="5" cols="1" name="NewCommentText" id="NewCommentText"></textarea><br />
 
                         @if (!string.IsNullOrEmpty(ViewBag.ErrorText))
@@ -98,7 +87,7 @@
                                 @ViewBag.ErrorText
                             </div>
                         }
-                        <input class="btn btn-default" type="submit" id="Submit" name="Submit" value="Kommentieren" />
+                        <input class="btn btn-default" type="submit" id="Submit" name="Submit" value="Senden" />
                     </div>
                 </div>
             </div>           

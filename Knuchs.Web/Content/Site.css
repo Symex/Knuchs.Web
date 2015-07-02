@@ -26,6 +26,9 @@ border-radius: 5px;
     resize: none;
 
 }
+.margin-top-negative46 {
+    margin-top: -46px;
+}
 .orange-text-link:hover {
         color: orange;
 }
@@ -93,8 +96,7 @@ display: block;
 }
 
 .favContainer {
-  margin-top: -40px;
-  margin-right: 70px;
+  margin-top: -10px;
 }
 
 .splitPanel-Right {

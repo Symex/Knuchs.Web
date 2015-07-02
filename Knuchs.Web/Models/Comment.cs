@@ -14,6 +14,5 @@ namespace Knuchs.Web.Models
         public virtual BlogEntry RefBlogEntry { get; set; }
         public virtual User RefUser { get; set; }
         public DateTime CreatedOn { get; set; }
-        public string Title { get; set; }
     }
 }

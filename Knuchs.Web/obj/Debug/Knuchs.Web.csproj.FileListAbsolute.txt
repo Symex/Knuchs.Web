@@ -54,9 +54,10 @@ c:\users\simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\obj\D
 c:\users\simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.pdb
 c:\users\simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.Initial.resources
 c:\users\simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.csproj.GenerateResource.Cache
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.csprojResolveAssemblyReference.cache
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.Initial.resources
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.csproj.GenerateResource.Cache
+C:\Users\Simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\bin\EntityFramework.SqlServer.dll
+C:\Users\Simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\bin\EntityFramework.SqlServer.xml
+C:\Users\Simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\bin\de\EntityFramework.SqlServer.resources.dll
+C:\Users\Simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.asd.resources
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\Knuchs.Web.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\Knuchs.Web.pdb
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\Antlr3.Runtime.dll
@@ -68,47 +69,10 @@ C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\DotNetOpenAuth.OpenId.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\EntityFramework.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\EntityFramework.SqlServer.dll
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\Microsoft.CSharp.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\Microsoft.Web.Infrastructure.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\Microsoft.Web.WebPages.OAuth.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\Newtonsoft.Json.dll
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Helpers.dll
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Mvc.dll
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Optimization.dll
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Razor.dll
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.WebPages.Deployment.dll
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.WebPages.dll
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.WebPages.Razor.dll
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\WebGrease.dll
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\WebMatrix.Data.dll
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\WebMatrix.WebData.dll
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\EntityFramework.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\EntityFramework.SqlServer.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\Newtonsoft.Json.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Helpers.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Mvc.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Razor.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.WebPages.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.WebPages.Deployment.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.WebPages.Razor.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\WebMatrix.Data.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\Microsoft.Web.WebPages.OAuth.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\WebMatrix.WebData.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\DotNetOpenAuth.AspNet.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\DotNetOpenAuth.Core.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\DotNetOpenAuth.OAuth.Consumer.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\DotNetOpenAuth.OAuth.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\DotNetOpenAuth.OpenId.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\de\EntityFramework.resources.dll
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\de\EntityFramework.SqlServer.resources.dll
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.dll
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.pdb
-C:\Users\Simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\bin\EntityFramework.SqlServer.dll
-C:\Users\Simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\bin\EntityFramework.SqlServer.xml
-C:\Users\Simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\bin\de\EntityFramework.SqlServer.resources.dll
-C:\Users\Simon\documents\visual studio 2012\Projects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.asd.resources
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.asd.resources
-C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\Microsoft.CSharp.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.ComponentModel.DataAnnotations.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Configuration.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Data.DataSetExtensions.dll
@@ -126,15 +90,51 @@ C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.DynamicData.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Entity.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Extensions.dll
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Helpers.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Http.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Http.WebHost.dll
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Mvc.dll
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Optimization.dll
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Razor.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Routing.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Services.dll
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.WebPages.Deployment.dll
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.WebPages.dll
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.WebPages.Razor.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Xml.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Xml.Linq.dll
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\WebGrease.dll
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\WebMatrix.Data.dll
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\WebMatrix.WebData.dll
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\EntityFramework.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\EntityFramework.SqlServer.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\Newtonsoft.Json.xml
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Net.Http.Formatting.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Helpers.xml
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Http.xml
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Http.WebHost.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Mvc.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Razor.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.WebPages.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.WebPages.Deployment.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.WebPages.Razor.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\WebMatrix.Data.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\Microsoft.Web.WebPages.OAuth.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\WebMatrix.WebData.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\DotNetOpenAuth.AspNet.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\DotNetOpenAuth.Core.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\DotNetOpenAuth.OAuth.Consumer.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\DotNetOpenAuth.OAuth.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\DotNetOpenAuth.OpenId.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\de\EntityFramework.resources.dll
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\de\EntityFramework.SqlServer.resources.dll
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.Initial.resources
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.asd.resources
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.CommentDate.resources
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.CommentDate1.resources
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.favo.resources
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.Migrations.commenttitlegone.resources
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.csproj.GenerateResource.Cache
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.dll
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Debug\Knuchs.Web.pdb
