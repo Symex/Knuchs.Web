@@ -333,13 +333,14 @@ namespace Knuchs.Web.Controllers
             {
                 var curruser = HttpContext.GetSession().CurrentUser.Id;
                 var myProfile = db.Users.FirstOrDefault(u => u.Id == curruser);
-                return View("EditMyProfile", myProfile);
+                var emp = new EditMyProfileViewModel() { User = myProfile };
+                return View("EditMyProfile", emp);
             }
         }
 
         [HttpPost]
         [AuthorizeUser]
-        public ActionResult SaveProfileChanges(string OldPW, string NewPW, string NewPW2, User user)
+        public ActionResult SaveProfileChanges(EditMyProfileViewModel emp)
         {
             HttpPostedFileBase f = null;
             if (HttpContext.Request.Files.Count > 0)
@@ -353,41 +354,53 @@ namespace Knuchs.Web.Controllers
                 db.Users.Attach(u);
                 if (f != null)
                 {
-                    var ext = f.FileName.Split('.').LastOrDefault();
-                    if (ext == "jpg" || ext == "png" || ext == "gif")
+                    if (!string.IsNullOrEmpty(f.FileName))
                     {
-                        var path = HttpContext.Server.MapPath("~/_Upload/profile_p_" + u.Id + ".jpg");
-                        f.SaveAs(path);
-                        u.PictureLink = path;
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("Picture", "Ungültiges Dateiformat");
-                    }
-                }
-                if (!string.IsNullOrEmpty(user.Email))
-                {
-                    u.Email = user.Email;
-                }
-                if (!string.IsNullOrEmpty(OldPW))
-                {
-                    if (u.Password == OldPW)
-                    {
-                        if (NewPW == NewPW2)
+                        var ext = f.FileName.Split('.').LastOrDefault();
+                        if (ext == "jpg" || ext == "png" || ext == "gif")
                         {
-                            u.Password = NewPW;
+                            var path = HttpContext.Server.MapPath("~/_Upload/profile_p_" + u.Id + ext);
+                            f.SaveAs(path);
+                            u.PictureLink = path;
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("User.PictureLink", "Ungültiges Dateiformat");
+                        }
+                    }
+                }
+                if (!string.IsNullOrEmpty(emp.User.Email))
+                {
+                    try
+                    {
+                        var addr = new MailAddress(emp.User.Email);
+                        u.Email = emp.User.Email;
+                    }
+                    catch {
+                        ModelState.AddModelError("User.Email", "Ungültige Email-Adresse");
+                    }
+                   
+                }
+                if (!string.IsNullOrEmpty(emp.OldPW))
+                {
+                    if (u.Password == emp.OldPW)
+                    {
+                        if (emp.NewPW == emp.NewPW2)
+                        {
+                            u.Password = emp.NewPW;
                         }
                         else
                         {
                             ModelState.AddModelError("NewPW", "Die neuen Passwörter stimmen nicht überein.");
                         }
                     }
-                    else if (!string.IsNullOrEmpty(NewPW) || !string.IsNullOrEmpty(NewPW2))
+                    else if (!string.IsNullOrEmpty(emp.NewPW) || !string.IsNullOrEmpty(emp.NewPW2))
                     {
                         ModelState.AddModelError("OldPW", "Gib das aktuelle Passwort ein");
                     }
                 }
-                if((!string.IsNullOrEmpty(NewPW) || !string.IsNullOrEmpty(NewPW2)) && string.IsNullOrEmpty(OldPW) ){
+                if ((!string.IsNullOrEmpty(emp.NewPW) || !string.IsNullOrEmpty(emp.NewPW2)) && string.IsNullOrEmpty(emp.OldPW))
+                {
                     ModelState.AddModelError("OldPW", "Gib dein altes Passwort ein um ein neues zu erstellen.");
                 }
                 db.SaveChanges();
@@ -398,13 +411,13 @@ namespace Knuchs.Web.Controllers
                 HttpContext.GetSession().CurrentUser = u;
                 ViewBag.Message = "Deine Änderungen wurden übernommen!";
                 ViewBag.Error = "";
-                return View("EditMyProfile",u);
+                return View("EditMyProfile", emp);
             }
             else
             {
                 HttpContext.GetSession().CurrentUser = u;
                 ViewBag.Message = "Bearbeite die gekennzeichneten Felder und versuche es erneut.";
-                return View("EditMyProfile",u);
+                return View("EditMyProfile",emp);
             }
         }
 

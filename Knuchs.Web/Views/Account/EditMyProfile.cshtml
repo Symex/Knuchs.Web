@@ -1,4 +1,4 @@
-﻿@model Knuchs.Web.Models.User
+﻿@model Knuchs.Web.Models.EditMyProfileViewModel
 
 @{
     ViewBag.Title = "Profil";
@@ -17,36 +17,37 @@
             {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true)
-                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.User.Id)
                     <div class="editor-label">
                         Altes Passwort
                     </div>
                     <div class="editor-field">
-                      <input name="OldPW" title="OldPW" class = "form-control" type="password" />
-                        <b style="color: orange">@Html.ValidationMessageFor(model => model.Password)</b>
+                        @Html.PasswordFor(m => m.OldPW, new { @class= "form-control"})
+                    
+                        <b style="color: orange">@Html.ValidationMessageFor(m => m.OldPW)</b>
                     </div>
                     <br />
                     <div class="editor-label">
-                        Neues Passwort
+                     Neues Passwort
                     </div>
                     <div class="editor-field">
-                       <input type="password" class="form-control" name="NewPW" title="NewPW" />
-                        <b style="color: orange">@Html.ValidationMessageFor(model => model.Password)</b>
+                            @Html.PasswordFor(m => m.NewPW, new { @class= "form-control"})
+                        <b style="color: orange">@Html.ValidationMessageFor(model => model.NewPW)</b>
                     </div>
                     <br /><div class="editor-label">
-                        Neues Passwort wiederholen
+                    Neues Passwort wiederholen
                     </div>
                     <div class="editor-field">
-                       <input type="password" class="form-control" name="NewPW2" title="NewPW2" />
-                        <b style="color: orange">@Html.ValidationMessageFor(model => model.Password)</b>
+                             @Html.PasswordFor(m => m.NewPW2, new { @class= "form-control"})
+                        <b style="color: orange">@Html.ValidationMessageFor(model => model.NewPW2)</b>
                     </div>
                     <br />
                     <div class="editor-label">
                         E-Mail
                     </div>
                     <div class="editor-field">
-                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "hans@muster.ch" })
-                        <b style="color: orange">@Html.ValidationMessageFor(model => model.Email)</b>
+                        @Html.TextBoxFor(model => model.User.Email, new { @class = "form-control" })
+                        <b style="color: orange">@Html.ValidationMessageFor(model => model.User.Email)</b>
                     </div>
                     <br />
                     <div class="editor-label">
@@ -54,7 +55,7 @@
                     </div>
                      <div class="editor-field">
                         <input type="file" name="Picture" title="Picture" class="form-control" />
-                        <b style="color: orange">@Html.ValidationMessageFor(model => model.PictureLink)</b>
+                        <b style="color: orange">@Html.ValidationMessageFor(model => model.User.PictureLink)</b>
                     </div>
                 @*
                     <span class="btn btn-default btn-file">
@@ -69,15 +70,15 @@
                         Newsletter erhalten
                     </div>
                     <div class="editor-field">
-                        @Html.EditorFor(model => model.HasNewsletter)
-                        <b style="color: orange">@Html.ValidationMessageFor(model => model.HasNewsletter)</b>
+                        @Html.EditorFor(model => model.User.HasNewsletter)
+                        <b style="color: orange">@Html.ValidationMessageFor(model => model.User.HasNewsletter)</b>
                     </div>
                 <br />
-                     if(!string.IsNullOrEmpty(Model.PictureLink))
+                     if(!string.IsNullOrEmpty(Model.User.PictureLink))
                    { 
                       @Html.Raw("Dein aktuelles Bild: ");
                        
-                        <img height="50" width="50" src ="@Url.Content("~/_Upload/profile_p_"+ Model.Id + "."+Model.PictureLink.Split('.').LastOrDefault())" />
+                        <img height="50" width="50" src ="@Url.Content("~/_Upload/profile_p_"+ Model.User.Id + "."+Model.User.PictureLink.Split('.').LastOrDefault())" />
                    }
                    else
                    {
