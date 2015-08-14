@@ -1,25 +1,102 @@
 ﻿@using Knuchs.Web.Helper;
-<div id="nav">
-        <ul id="menu">
-            <li>@Html.ActionLink("Blog", "Index", "Home")</li>
-            <li>@Html.ActionLink("Info", "About", "Home")</li>
-            <li>@Html.ActionLink("Account", "Login", "Account")</li>
-            @if (HttpContext.Current.Session["KnuchsSession"] != null)
-            { 
-                var  sess = (Knuchs.Web.Models.KnuchsSession)HttpContext.Current.Session["KnuchsSession"];
-                if(sess.CurrentUser !=null){
 
-                    if (sess.CurrentUser.IsAdmin)
-                    { 
-                        <li>@Html.ActionLink("Manage","ManageUsers","Account")</li>
-                <li>@Html.ActionLink("Write", "WriteEntry","Account")</li>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+                <span class="sr-only">Toggle</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Knuchs", "Index", "Home", new { }, new { @class = "navbar-brand" })
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+            <ul class="nav navbar-nav">
+                @if (ViewBag.Title == "Blog")
+                {
+                    <li class="active">@Html.ActionLink("Blog", "Index", "Home")</li>
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Blog", "Index", "Home")</li>
+                }
+                @if (ViewBag.Title == "Info")
+                {
+                    <li class="active">@Html.ActionLink("Info", "About", "Home")</li>
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Info", "About", "Home")</li>
+                }
+
+                @{var session = (Knuchs.Web.Models.KnuchsSession)HttpContext.Current.Session["KnuchsSession"];
+                  if (session.CurrentUser != null)
+                  {
+                      if (ViewBag.Title == "Favoriten")
+                      {
+                        <li class="active">@Html.ActionLink("Favoriten", "MyFavourites", "Account")</li>
+                      }
+                      else
+                      {
+                        <li>@Html.ActionLink("Favoriten", "MyFavourites", "Account")</li>
+                      }
+                      if (ViewBag.Title == "Profil")
+                      {
+                        <li class="active">@Html.ActionLink("Profil", "EditMyProfile", "Account")</li>}
+                      else
+                      { 
+                        <li>@Html.ActionLink("Profil", "EditMyProfile", "Account")</li>}
+                      if (session.CurrentUser.IsAdmin)
+                      {
+                          if (ViewBag.Title == "Admin")
+                          {
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-keyboard="false" data-backdrop="static">Admin<span class="caret"></span></a>
+
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Beitragsverwaltung", "ManageBlogEntries", "Account")</li>
+                                    <li>@Html.ActionLink("Benutzerverwaltung", "ManageUsers", "Account")</li>
+                                </ul>
+                            </li>
+                          }
+                          else
+                          {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-keyboard="false" data-backdrop="static">Admin<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Beitragsverwaltung", "ManageBlogEntries", "Account")</li>
+                                    <li>@Html.ActionLink("Benutzerverwaltung", "ManageUsers", "Account")</li>
+
+                                </ul>
+                            </li>
+                          }
+                      }
+                  }
+                }
+            </ul>
+            @using (Html.BeginForm("SearchBlog", "Home", FormMethod.Post, new { @class = "navbar-form navbar-left", @role = "search" }))
+            {
+                <div class="form-group">
+                    <input type="text" class="form-control" id="SearchTerm" name="SearchTerm" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            }
+            <ul class="nav navbar-nav navbar-right">
+
+                @if (HttpContext.Current.Session["KnuchsSession"] != null)
+                {
+                    var sess = (Knuchs.Web.Models.KnuchsSession)HttpContext.Current.Session["KnuchsSession"];
+                    if (sess.CurrentUser != null)
+                    {
+                    <li>@Html.ActionLink("Logout", "LogOff", "Account")</li>
+                    }
+                    else
+                    {
+                    <li>@Html.ActionLink("Login", "Login", "Account")</li>
                     }
                 }
-            }
-        </ul>
-</div>
-
-@*<div id="logo">
-<img id="logoImg" src="~/Content/Img/logo.jpg"/>
-</div>
-*@
+            </ul>
+        </div>
+    </div>
+</nav>

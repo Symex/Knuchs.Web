@@ -262,6 +262,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Img\b3.jpg" />
     <Content Include="Content\Img\bg-blog.jpg" />
     <Content Include="Content\Img\bg.png" />
     <Content Include="Content\Img\bg2.png" />

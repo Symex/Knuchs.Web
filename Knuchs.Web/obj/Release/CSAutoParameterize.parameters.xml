@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
-  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Die in der Datei &amp;quot;web.config&amp;quot; festgelegte Verbindungszeichenfolge, die von der Anwendung für den Zugriff auf die Datenbank verwendet wird." defaultValue="Data Source=(LocalDb)\v11.0;Initial Catalog=aspnet-Knuchs.Web-20150616220838;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\aspnet-Knuchs.Web-20150616220838.mdf" tags="SqlConnectionString">
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=milli.mxm.ch; Initial Catalog=simon_knuchs_donotuse; User ID=sa; Password=pu&amp;lp2008" tags="SqlConnectionString">
     <parameterEntry kind="XmlFile" scope="C:\\_Projects\\_DemoProjects\\Knuchs\.Web\\Knuchs\.Web\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
   </parameter>
 </parameters>

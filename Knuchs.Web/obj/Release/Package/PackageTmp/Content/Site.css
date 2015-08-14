@@ -4,203 +4,131 @@
 
 
 body {
-    background: url("/Content/Img/bg2.png");
-}
+    background: url("/Content/Img/b3.jpg");
 
+}
+h2 {
+ color: white !important;
+}
 .contentWrapper {
     width: 80%;
-    height: 100%;
-    margin: auto;
-}
+    min-height: 100% !important;
 
-.anythingSlider-metallic.activeSlider .anythingWindow {
-    border: none;
-}
-
-.wrapper {
-    margin-top: 20px;
-    margin-left: 50px;
-    margin-right: 50px;
-    height: 90vh;
-    display: flex;
-    /*// Direction of the items, can be row or column*/
-    flex-direction: column;
-}
-
-.header {
-    background-color: white;
-    height: 100px;
-    margin-bottom: 20px;
-    min-height: 100px;
-     -webkit-box-shadow: inset 0px 0px 79px -8px rgba(0,0,0,0.75);
--moz-box-shadow: inset 0px 0px 79px -8px rgba(0,0,0,0.75);
-box-shadow: inset 0px 0px 79px -8px rgba(0,0,0,0.75);
-border-radius: 10px 10px 10px 10px;
--moz-border-radius: 10px 10px 10px 10px;
--webkit-border-radius: 10px 10px 10px 10px;
+    margin: auto !important;
+    background-color: rgba(0, 0, 0,0.5);
+    padding: 30px;
+    -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
    
 }
+#NewCommentText {
+    resize: none;
 
-.main {
-    flex: 1;
-    min-height: 200px;
-    border-radius: 22px 22px 22px 22px;
-    -moz-border-radius: 22px 22px 22px 22px;
-    -webkit-border-radius: 22px 22px 22px 22px;
-    background-color: black;
-    -webkit-box-shadow: 12px 16px 47px 0px rgba(255,255,255,0.47);
--moz-box-shadow: 12px 16px 47px 0px rgba(255,255,255,0.47);
-box-shadow: 12px 16px 47px 0px rgba(255,255,255,0.47);
+}
+.margin-top-negative46 {
+    margin-top: -46px;
+}
+.orange-text-link:hover {
+        color: orange;
+}
+.orange-text-link:visited:hover {
+        color: orange;
+}
+.orange-text-link:visited {
+    color: black;
+}
+.orange-text-link {
+    color: black;
+}
+.centered-content {
+    text-align: center !important;
+}
+.clear {
+    clear:both;
+}
+.loginWrapper {
+    margin: auto;
+    width: 30%;
+    min-width: 500px;
+}
+.fixed-width-200 {
+   min-width: 200px;
+}
+.fixed-width-150 {
+   min-width: 150px;
+}
+.fixed-width-100 {
+   min-width: 100px;
+}
+.fixed-width-50 {
+   min-width: 50px;
+}
+.margin-top-negative10 {
+    margin-top: -8px;
+    margin-left: 2px;
+  }
+.margin-top-negative20 {
+    margin-top: -21px;
+}
+.margin-top-negative40 {
+    margin-top: -40px;
+}
+.hrsmall {
+width: 100%;
+}
+.BlogHead{
+ font: bold;
+}
+.float-left {
+float:left;
+margin-right: 30px;
+}
+.float-right {
+float: right;
+display: block;
+}
+.panel {
+    margin-bottom: 0px !important;
+}
+.panelcomment {
+    margin-bottom: 20px !important;
 }
 
-.footer {
-    background-color: white;
-    text-align: center;
-    height: 40px;
-    margin-top: 20px;
-    min-height: 60px;
-   -webkit-box-shadow: inset 0px 0px 79px -8px rgba(0,0,0,0.75);
--moz-box-shadow: inset 0px 0px 79px -8px rgba(0,0,0,0.75);
-box-shadow: inset 0px 0px 79px -8px rgba(0,0,0,0.75);
-border-radius: 10px 10px 10px 10px;
--moz-border-radius: 10px 10px 10px 10px;
--webkit-border-radius: 10px 10px 10px 10px;
+.favContainer {
+  margin-top: -10px;
 }
 
-
-/*Working*/
-#nav ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
+.splitPanel-Right {
+ word-break: break-all;
+  margin-left: 80px;
     display: inline-block;
 }
-
-#nav a {
-    text-decoration: none;
-    text-shadow: 2px;
-    font-size: 24px;
-    color: grey;
-    margin-top: 50px;
-}
-
-    #nav a:hover {
-        color: orange;
-    }
-/*Needed*/
-#nav a:visited {
-        
-}
-
-#nav ul li {
-    display: inline;
-}
-
-#logo {
-   width: 40%; /* I took the width from your post and placed it in css */
-   height: 100%;
-   float: right;
-   }
-
-/* This will style any <img> element in .parent div */
-#logo img {
-   height: 100%;
-   width: 100%;
-}
-
-#nav {
-width: 30%;
-}
-
-#nav {
+.splitPanel-Left {
+    margin-left: -15px;
+  margin-right: 10px;
+  margin-top: -10px;
+  padding: 5px;
   float: left;
-  text-align: left;
-  display: inline;
-  margin-top: 60px;
-  margin-left:20px;
-  
 }
 
-#logo {
-  float: right;
-  text-align: right;
-  display: inline;
-}
 
-.slider-centered {
-    text-align: center;
-}
-
-#slider {
- padding: 20px !important;
- /*background-color: black  !important;*/
-}
-.blogEntryHeader {
+.btn-file {
     position: relative;
-    top:0;
-    background-color: grey;
-    width: 100%;
-    color: white;
+    overflow: hidden;
 }
-
-a.ShowDiscussion {
-    text-decoration: none;
-    color: lightgray;
-
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
 }
-a.ShowDiscussion:hover {
-    text-decoration: none;
-    color: orange;
-
-}
-    a.ShowDiscussion:visited {
-           text-decoration: none;
-    color: lightgray;
-    }
-
-.headerSpacer {
-    width: 50%
-}
-/*.slider-centered panel activePage {
-background-color: black;
-}*/
-
-.scrollableContent {
- font-family: "Times New Roman", Times, serif;
- overflow:auto;
- text-wrap: normal;
- word-break:break-all;
- width: 60%;
- margin: auto;
- /*background: repeat url("/Content/Img/bg.blog.jpg") !important;*/
- height: 60%;
- background-color: white;
- margin-top: 15px;
- margin-bottom: 10px;
- -webkit-box-shadow: inset 0px 0px 79px -8px rgba(0,0,0,0.75);
--moz-box-shadow: inset 0px 0px 79px -8px rgba(0,0,0,0.75);
-box-shadow: inset 0px 0px 79px -8px rgba(0,0,0,0.75);
-border-radius: 10px 10px 10px 10px;
--moz-border-radius: 10px 10px 10px 10px;
--webkit-border-radius: 10px 10px 10px 10px;
-border: 0px solid #000000;
-padding: 20px;
-
-}
-
-.contentWrapper {
-background-color: white;
-margin: auto;
-overflow: auto;
-margin-top: 20px;
--webkit-box-shadow: inset 0px 0px 79px -8px rgba(0,0,0,0.75);
--moz-box-shadow: inset 0px 0px 79px -8px rgba(0,0,0,0.75);
-box-shadow: inset 0px 0px 79px -8px rgba(0,0,0,0.75);
-border-radius: 10px 10px 10px 10px;
--moz-border-radius: 10px 10px 10px 10px;
--webkit-border-radius: 10px 10px 10px 10px;
-border: 0px solid #000000;
-
-padding: 20px;
-}
-

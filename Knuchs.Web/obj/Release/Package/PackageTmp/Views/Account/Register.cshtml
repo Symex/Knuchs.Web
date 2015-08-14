@@ -2,41 +2,49 @@
 @{
     ViewBag.Title = "Registrieren";
 }
+<div class="contentWrapper">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Neues Benutzerkonto erstellen
+        </div>
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Neues Konto erstellen.</h2>
-</hgroup>
+        <div class="panel-body">
+            @using (Html.BeginForm("RegisterUser", "Account", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()  
+                <p>
+                     <b> Benutzername</b>
+                    @Html.TextBoxFor(m => m.Username, new { @Class = "form-control" })
+                    <p style="color: orange">   @Html.ValidationMessageFor(m => m.Username)</p> 
+                </p>
+                <p>
+                     <b> Passwort</b>
+                    @Html.PasswordFor(m => m.Password, new { @Class = "form-control" })
+                   <p style="color: orange">    @Html.ValidationMessageFor(m => m.Password)</p> 
+                </p>
+                <p>
+                    <b>Passwort wiederholen</b>
+                    <input type="password" name="pwcheck" class="form-control" />
+                </p>
+                <p>
+                    <b>Email</b>
+                    @Html.TextBoxFor(m => m.Email, new { @Class = "form-control" })
+              <p style="color: orange">     @Html.ValidationMessageFor(m => m.Email)</p> 
+                </p>
+                <p>
+                    @Html.CheckBoxFor(m => m.HasNewsletter)
+                    @Html.Raw("Möchtest du einen möglicherweise in Zukunft erscheinenden Newsletter erhalten? Deine Email-Adresse bleibt vertraulich.")
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
+                </p>
+           
+                <input type="submit" value="Registrieren" class="btn btn-default" />
+            }
+        </div>
+    </div>
 
-    <fieldset>
-        <legend>Registrierungsformular</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.Username)
-                @Html.TextBoxFor(m => m.Username)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Email)
-                @Html.TextBoxFor(m => m.Email)
-            </li>
-            <li>
-                @Html.LabelFor(m=> m.HasNewsletter)
-                @Html.CheckBoxFor(m => m.HasNewsletter)
-            </li>
-        </ol>
-        <input type="submit" value="Registrieren" />
-    </fieldset>
-}
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</div>

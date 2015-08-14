@@ -3,50 +3,43 @@
 @{
     ViewBag.Title = "Anmelden";
 }
-<div class="contentWrapper">
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
+<div class="loginWrapper">
+    <div class="contentWrapper">
+    <div class="panel panel-default">
+        <div class="panel-heading">Anmelden</div>
+        <div class="panel-body">
+            @using (Html.BeginForm("LoginCallBack", "Account"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
 
-    @using (Html.BeginForm("LoginCallBack","Account")) {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-
-        
-
-           <table>
-                <tr>
-                  <td>  @Html.LabelFor(m => m.Username)</td>
-                   <td>   @Html.TextBoxFor(m => m.Username)</td>
-                   <td>   @Html.ValidationMessageFor(m => m.Username)</td>
-                </tr>
-                <tr>
-                   <td>   @Html.LabelFor(m => m.Password)</td>
-                   <td>   @Html.PasswordFor(m => m.Password)</td>
-                   <td>   @Html.ValidationMessageFor(m => m.Password)</td>
-                </tr>
-                <tr>
-                  <td colspan="3">    @Html.CheckBoxFor(m => m.RememberMe)
-                     @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
-
-                  </td>
-                </tr>
-          
-            
-            @Html.HiddenFor(m=>m.ReturnUrl)
-               <tr>
-                   <td colspan="3">
-                       <input type="submit" value="Anmelden" />
-                   </td>
-               </tr>  
-       
-      </table>
-        <p>Du besitzt noch kein Konto? Jetzt @Html.ActionLink("Registrieren", "Register")!</p>
-    
-        
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+                <b>Benutzername</b> <br />
+                @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                <p style="color: orange">  @Html.ValidationMessageFor(m => m.Username)</p>
+                @*<br />*@
+                <b>Passwort</b><br />
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                <p style="color: orange">   @Html.ValidationMessageFor(m => m.Password)</p>
+               
+                <p class="float-left">@Html.LabelFor(m => m.RememberMe, new { @class = "checkbox", @checked = true })
+                @Html.CheckBoxFor(m => m.RememberMe)<br />
+                </p>
+                  @Html.HiddenFor(m => m.ReturnUrl)
+                
+                <br /><br /><br /><br />
+                <p><input type="submit" value="Anmelden" class="btn btn-default clear" /></p>
+             
+  
+                <p>Du besitzt noch kein Konto? Jetzt @Html.ActionLink("Registrieren", "Register")!</p>
+               
+            }
+        </div>
     </div>
+
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</div>
+</div>

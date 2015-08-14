@@ -33,9 +33,9 @@ namespace Knuchs.Web.Controllers
             }
             catch (Exception ex)
             {
-                model.Add(new BlogEntry() { Text = ex.Message });
+                var vms = new List<BlogEntryViewModel>();
 
-                return View("Blog", model);
+                return View("Blog", vms);
             }
         }
 

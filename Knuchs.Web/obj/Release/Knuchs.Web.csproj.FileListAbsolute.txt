@@ -75,3 +75,7 @@ C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Xml.Linq.dll
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Net.Http.Formatting.xml
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Http.xml
 C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\bin\System.Web.Http.WebHost.xml
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Release\Knuchs.Web.Migrations.CommentDate.resources
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Release\Knuchs.Web.Migrations.CommentDate1.resources
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Release\Knuchs.Web.Migrations.favo.resources
+C:\_Projects\_DemoProjects\Knuchs.Web\Knuchs.Web\obj\Release\Knuchs.Web.Migrations.commenttitlegone.resources

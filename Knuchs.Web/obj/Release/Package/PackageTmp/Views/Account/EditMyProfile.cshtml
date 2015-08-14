@@ -1,0 +1,130 @@
+﻿@model Knuchs.Web.Models.EditMyProfileViewModel
+
+@{
+    ViewBag.Title = "Profil";
+}
+<div class="contentWrapper">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Profil bearbeiten
+        </div>
+        <div class="panel-body">
+            @if (!string.IsNullOrEmpty(ViewBag.Message))
+            {
+                <h4 style="color: orange">@ViewBag.Message</h4> <hr />
+            }
+
+            @using (Html.BeginForm("SaveProfileChanges", "Account", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.User.Id)
+                <div class="editor-label">
+                    Altes Passwort
+                </div>
+                <div class="editor-field">
+                    @Html.PasswordFor(m => m.OldPW, new { @class = "form-control" })
+
+                    <b style="color: orange">@Html.ValidationMessageFor(m => m.OldPW)</b>
+                </div>
+                <br />
+                <div class="editor-label">
+                    Neues Passwort
+                </div>
+                <div class="editor-field">
+                    @Html.PasswordFor(m => m.NewPW, new { @class = "form-control" })
+                    <b style="color: orange">@Html.ValidationMessageFor(model => model.NewPW)</b>
+                </div>
+                <br />
+                <div class="editor-label">
+                    Neues Passwort wiederholen
+                </div>
+                <div class="editor-field">
+                    @Html.PasswordFor(m => m.NewPW2, new { @class = "form-control" })
+                    <b style="color: orange">@Html.ValidationMessageFor(model => model.NewPW2)</b>
+                </div>
+                <br />
+                <div class="editor-label">
+                    E-Mail
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.User.Email, new { @class = "form-control" })
+                    <b style="color: orange">@Html.ValidationMessageFor(model => model.User.Email)</b>
+                </div>
+                <br />
+                <div class="editor-label">
+                    Profilbild hochladen (50x50 / jpg,png,gif)
+                </div>
+                <div class="editor-field">
+                    <input type="file" name="Picture" title="Picture" class="form-control" />
+                    <b style="color: orange">@Html.ValidationMessageFor(model => model.User.PictureLink)</b>
+                </div>
+                <br />
+
+                <div class="editor-label">
+                    Newsletter erhalten
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.User.HasNewsletter)
+                    <b style="color: orange">@Html.ValidationMessageFor(model => model.User.HasNewsletter)</b>
+                </div>
+                <br />
+                <p>Das Preview Zeigt einen Kommentar mit deinem Profil an, um Änderungen sichtbar zu machen must du zuerst speichern.</p>
+                <br />
+                <p>
+                    <input type="submit" value="Save" class="btn btn-default" />
+                    <a type="button" href="#opener" id="opener" class="btn btn-default">Preview</a>
+                </p>
+            }
+        </div>
+
+
+        <div style="width: 80%; margin: auto;">
+            <div style="display: none;" id="previewContainer">
+                <div class="panel panelcomment panel-default">
+                    <div class="panel-heading">
+                        <div class="splitPanel-Left">
+                            <img alt="Profilbild" height="50" width="50" src="@Url.Content("~/_Upload/profile_p_" + @Model.User.Id + "." + @Model.User.PictureLink.Split('.').LastOrDefault())" />
+                        </div>
+                        <div class="float-left fixed-width-200">
+                            @if (Model.User.IsAdmin)
+                            { 
+                                @Html.Raw("<b style=\"color:orange;\">" + Model.User.Username + "</b>");
+                            }
+                            else
+                            { 
+                                @Html.Raw("<b>" + Model.User.Username + "</b>");
+                            }
+                        </div>
+                        <br />
+                        <div style="clear: right; color: darkgray;">@DateTime.Now.ToString("g")</div>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                      At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $(document).ready(function () {
+        $("#opener").click(function (event) {
+            if ($('#previewContainer').hasClass("shown")) {
+                $('#previewContainer').hide();
+                $('#previewContainer').removeClass("shown")
+            } else {
+                $('#previewContainer').show();
+                $('#previewContainer').addClass("shown")
+            }
+        });
+    });
+</script>

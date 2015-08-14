@@ -1,58 +1,68 @@
-﻿@model List<Knuchs.Web.Models.BlogEntry>
+﻿@model List<Knuchs.Web.Models.BlogEntryViewModel>
 @{
-    ViewBag.Title = "Homepage";
+    ViewBag.Title = "Blog";
 }
-<script src="@Url.Content("~/Content/AnySlide/js/jquery.anythingslider.fx.js")"></script>
- <link rel="stylesheet" href="@Url.Content("~/Content/AnySlide/css/animate.css")" />
-<!-- Required -->
-<script>
-    var jq = jQuery.noConflict();
-    jq(function () {
-        jq('#slider').anythingSlider({
-            theme: 'metallic',
-            expand: true,
-            autoPlay: false,
-            buildNavigation: false,
-            autoPlay: false,
-            buildStartStop: false,
 
-
-        }).anythingSliderFx({
-            // FX definitions
-            // 'class or ID'  : [ 'predefined-FX', 'distance', 'time', 'easing' ]
-        },{
-            // FX options
-            dataAnimate: 'data-animate'   // data attribute containing the animate.css class names to add for in and out fx
-    });
-    });
-</script>
-
-@*<div id="blogHeader">
-    <div id="Title">
-        @Model.Title
-    </div>
-    <div>@Model.CreatedOn</div>
-</div>
-*@
-
-
-<div id="slider" class="anythingSlider anythingSlider-metallic">
-    @foreach (var entry in Model)
-    { 
-        <div class="slider-centered" data-animate="bounceInDown, bounceOutDown">
-            <div class="blogEntryHeader">
-                @entry.Title &nbsp;&nbsp;&nbsp;
-           @entry.CreatedOn
-                <hr class="headerSpacer"/>
-           
-               @Html.ActionLink("Show Discussion for this Topic", "ShowComments", new { entryId = entry.Id }, new { @class= "ShowDiscussion"})
-           
-            </div>
-            <div class="scrollableContent">
-                <p class="">@Html.Raw(entry.Text) </p>
-            </div>
-
+<div class="contentWrapper">
+    @if (Model.Count <= 0)
+    { <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h4><b>Keine Einträge</b></h4>
         </div>
+        <div class="panel-body">
+            <p>Tut uns leid, es wurden keine Einträge gefunden.</p>
+        </div>
+    </div>
+    }
+    else
+    {
+        foreach (var m in Model)
+        {
+    
+        <div class="panel panel-default" style="margin-bottom: 20px !important;">
+            <div class="panel-heading">
+                <h4><b>@m.Title</b></h4>
+                <b>@m.CreatedOn</b>
+                <div class="float-right margin-top-negative46">
+                    <a type="button" href="@Url.Action("ShowComments", "Account", new { entryId = m.Id })" class="float-right btn btn-success">
+                        <span class="glyphicon glyphicon-comment"></span>
+                        <b>(@m.CommentsCount)</b>
+                    </a>
+                </div>
+
+                @{
+                    var sess = (Knuchs.Web.Models.KnuchsSession)HttpContext.Current.Session["KnuchsSession"];
+                    if (sess != null)
+                    {
+                        if (sess.CurrentUser != null)
+                        {
+
+                            if (sess.CurrentFavourites.FirstOrDefault(f => f.Id == m.Id) == null)
+                            {
+                                <div class="float-right favContainer" style="display: inline-block !important;">
+                                    <a type="button" class="btn btn-default" href="@Url.Action("MakeMyFavourite", "Account", new { userId = sess.CurrentUser.Id, blogId = m.Id, fav = true })">
+                                        <span class="glyphicon glyphicon-star-empty"></span>&nbsp; Add
+                                    </a>
+                                </div>                                    
+                            }
+                            else
+                            {
+                                <div class="float-right favContainer" style="display: inline-block !important;">
+                                    <a type="button" class="btn btn-default" href="@Url.Action("MakeMyFavourite", "Account", new { userId = sess.CurrentUser.Id, blogId = m.Id, fav = false })">
+                                        <span class="glyphicon glyphicon-star"></span>&nbsp; Remove
+                                    </a>
+                                </div>
+                            }
+                        }
+                    }   
+                }
+
+            </div>
+            <div class="panel-body">
+                @Html.Raw(m.Text)
+            </div>
+        </div>
+   
+        }
     }
 </div>
-
